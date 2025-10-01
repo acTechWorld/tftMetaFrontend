@@ -1,46 +1,52 @@
 <template>
-  <div class="flex p-6 gap-6 flex-col">
+  <div class="flex p-6 gap-6 flex-col" @dragend="currentInventoryDrag = null">
     <!-- Hex Board -->
     <div>
-      <div
-        v-for="r in rows"
-        :key="r"
-        class="flex gap-2"
-      >
+      <div v-for="(row, r) in rows" :key="r" class="flex gap-2">
         <HexTile
-          v-for="c in cols"
-          :class="r % 2 === 0 ? '' : 'translate-x-1/2'"
+          v-for="(col, c) in cols"
           :key="`${r}-${c}`"
+          :class="r % 2 === 0 ? '' : 'translate-x-1/2'"
+          :current-inventory-drag="currentInventoryDrag"
+          :main="board[r][c].main"
+          :subs="board[r][c].subs"
+          @drag-start="item => onTileDragStart(item, r, c)"
+          @drop-main="item => handleMainDrop(r, c, item)"
+          @drop-sub="item => handleSubDrop(r, c, item)"
         />
       </div>
     </div>
 
     <!-- Inventory Panel -->
-     <div class="flex gap-2">
-       <div class="border-2 border-gray-300 rounded-xl">
+    <div class="flex gap-2">
+      <!-- Champions -->
+      <div class="border-2 border-gray-300 rounded-xl">
         <div class="flex flex-wrap p-2 gap-1">
           <InventoryItem
             class="w-10 h-10"
-            v-for="(champion) in champions"
-            type="champion"
+            v-for="champion in champions"
             :key="champion.name"
+            type="champion"
             :src="champion.url"
+            @drag-start="el => currentInventoryDrag = el"
           />
         </div>
       </div>
+
+      <!-- Items -->
       <div class="border-2 border-gray-300 rounded-xl">
         <div class="flex flex-wrap p-2 gap-1">
-            <InventoryItem
-              class="w-8 h-8"
-              v-for="(item) in itemsNormal"
-              type="item"
-              :key="item.name"
-              :src="item.url"
-            />
+          <InventoryItem
+            class="w-8 h-8"
+            v-for="item in itemsNormal"
+            :key="item.name"
+            type="item"
+            :src="item.url"
+            @drag-start="el => currentInventoryDrag = el"
+          />
         </div>
       </div>
-     </div>
-   
+    </div>
   </div>
 </template>
 
@@ -49,11 +55,74 @@ import { ref } from "vue";
 import HexTile from "./HexTile.vue";
 import InventoryItem from "./InventoryItem.vue";
 
+export interface DragItem {
+  type: string;
+  src: string;
+}
+type Inventory = { name: string; url: string };
+
+
 const rows = 4;
 const cols = 7;
 
+type BoardTile = {
+  main: DragItem | null;
+  subs: (DragItem | null)[];
+};
 
-type Inventory = {name: string, url: string}
+// 2D board state (rows × cols)
+const board = ref<BoardTile[][]>(
+  Array.from({ length: rows }, () =>
+    Array.from({ length: cols }, () => ({
+      main: null,
+      subs: [null, null, null]
+    }))
+  )
+);
+
+const currentInventoryDrag = ref<DragItem | null>(null);
+
+const dragSource = ref<{ r: number; c: number } | null>(null); // source tile if drag from a HexTile
+
+function onTileDragStart(item: DragItem, r?: number, c?: number) {
+  currentInventoryDrag.value = item;
+  if (r !== undefined && c !== undefined) {
+    dragSource.value = { r, c };
+  } else {
+    dragSource.value = null; // drag from inventory
+  }
+}
+
+function handleMainDrop(r: number, c: number, item: DragItem) {
+  // Remove from source if moving between tiles
+  if (dragSource.value) {
+    const { r: sr, c: sc } = dragSource.value;
+    board.value[sr][sc].main = null;
+  }
+
+  board.value[r][c].main = item;
+  resetDrag();
+}
+
+function handleSubDrop(r: number, c: number, item: DragItem) {
+  // Remove from source if moving between tiles
+  if (dragSource.value) {
+    const { r: sr, c: sc } = dragSource.value;
+    board.value[sr][sc].subs = board.value[sr][sc].subs.map(s => (s === item ? null : s));
+  }
+
+  const subs = board.value[r][c].subs;
+  const emptyIndex = subs.findIndex(s => !s);
+  if (emptyIndex !== -1) subs[emptyIndex] = item;
+
+  resetDrag();
+}
+
+function resetDrag() {
+  currentInventoryDrag.value = null;
+  dragSource.value = null;
+}
+
 // Inventory images (replace these with your game item paths)
 const champions = ref<Inventory[]>([
   { "name": "Aatrox", "url": "https://sunderarmor.com/characters/Skin/15/Aatrox.png" },

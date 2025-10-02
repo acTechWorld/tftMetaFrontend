@@ -1,7 +1,7 @@
 <template>
-  <div class="flex p-6 gap-6 flex-col" @dragend="currentInventoryDrag = null">
+  <div class="flex p-6 gap-6 flex-col max-w-7xl mx-auto" @dragend="currentInventoryDrag = null">
     <!-- Hex Board -->
-    <div>
+    <div class="self-center">
       <div v-for="(row, r) in rows" :key="r" class="flex gap-2">
         <HexTile
           v-for="(col, c) in cols"
@@ -13,15 +13,19 @@
           @drag-start="item => onTileDragStart(item, r, c)"
           @drop-main="item => handleMainDrop(r, c, item)"
           @drop-sub="item => handleSubDrop(r, c, item)"
+          @remove-main="removeMain(r, c)"
+          @remove-sub="(index) => board[r][c].subs[index] = null"
         />
       </div>
     </div>
 
     <!-- Inventory Panel -->
-    <div class="flex gap-2">
+    <div class="flex gap-2 p-10"
+      @dragover.prevent                 
+       @drop.prevent="handleInventoryDrop">
       <!-- Champions -->
       <div class="border-2 border-gray-300 rounded-xl">
-        <div class="flex flex-wrap p-2 gap-1">
+        <div class="flex flex-wrap p-2 gap-1 justify-center">
           <InventoryItem
             class="w-10 h-10"
             v-for="champion in champions"
@@ -34,8 +38,8 @@
       </div>
 
       <!-- Items -->
-      <div class="border-2 border-gray-300 rounded-xl">
-        <div class="flex flex-wrap p-2 gap-1">
+      <div class="border-2 border-gray-300 rounded-xl ">
+        <div class="flex flex-wrap p-2 gap-1 justify-center">
           <InventoryItem
             class="w-8 h-8"
             v-for="item in itemsNormal"
@@ -92,29 +96,85 @@ function onTileDragStart(item: DragItem, r?: number, c?: number) {
     dragSource.value = null; // drag from inventory
   }
 }
+function removeMain(r: number, c: number) {
+  board.value[r][c].main = null;
+  board.value[r][c].subs = [null, null, null];
+}
 
-function handleMainDrop(r: number, c: number, item: DragItem) {
-  // Remove from source if moving between tiles
-  if (dragSource.value) {
+function handleMainDrop(r: number, c: number, champion: DragItem) {
+  if (!dragSource.value) {
+    // Coming from inventory → just place champ and clear subs
+    board.value[r][c].main = champion;
+    board.value[r][c].subs = [null, null, null];
+  } else {
     const { r: sr, c: sc } = dragSource.value;
-    board.value[sr][sc].main = null;
+
+    const sourceTile = board.value[sr][sc];
+    const targetTile = board.value[r][c];
+
+    if (targetTile.main) {
+      // ✅ Swap champions & subs
+      const tempMain = targetTile.main;
+      const tempSubs = [...targetTile.subs];
+
+      targetTile.main = sourceTile.main;
+      targetTile.subs = [...sourceTile.subs];
+
+      sourceTile.main = tempMain;
+      sourceTile.subs = [...tempSubs];
+    } else {
+      // ✅ Just move champ + subs to empty spot
+      targetTile.main = sourceTile.main;
+      targetTile.subs = [...sourceTile.subs];
+
+      sourceTile.main = null;
+      sourceTile.subs = [null, null, null];
+    }
   }
 
-  board.value[r][c].main = item;
   resetDrag();
 }
 
+
 function handleSubDrop(r: number, c: number, item: DragItem) {
+  const targetTile = board.value[r][c];
+
+  if (!targetTile.main) {
+    // No champion → cannot place sub, exit early
+    return;
+  }
+
   // Remove from source if moving between tiles
   if (dragSource.value) {
     const { r: sr, c: sc } = dragSource.value;
     board.value[sr][sc].subs = board.value[sr][sc].subs.map(s => (s === item ? null : s));
   }
 
-  const subs = board.value[r][c].subs;
-  const emptyIndex = subs.findIndex(s => !s);
-  if (emptyIndex !== -1) subs[emptyIndex] = item;
+  // Place item in first empty sub slot
+  const emptyIndex = targetTile.subs.findIndex(s => !s);
+  if (emptyIndex !== -1) {
+    targetTile.subs[emptyIndex] = item;
+  }
 
+  resetDrag();
+}
+
+function handleInventoryDrop(e: DragEvent) {
+  e.preventDefault(); 
+  if (currentInventoryDrag.value && dragSource.value) {
+    const { r: sr, c: sc } = dragSource.value;
+    if(currentInventoryDrag.value.type === 'champion') {
+      //Champion remove
+      board.value[sr][sc].main = null;
+      //All Item remove
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      board.value[sr][sc].subs = [null, null, null]
+
+    } else {
+      //Item remove
+      board.value[sr][sc].subs = board.value[sr][sc].subs.map(s => (s === currentInventoryDrag.value ? null : s));
+    }
+  }
   resetDrag();
 }
 

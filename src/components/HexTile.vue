@@ -1,13 +1,14 @@
 <template>
-  <div class="flex flex-col items-center gap-1">
-    <!-- Main hexagon -->
-    <div
-      class="w-36 sm:w-40 aspect-square cursor-pointer group relative"
-      :class="isHovering ? 'bg-orange-400/60 shadow-[0_0_25px_rgba(249,115,22,0.9)]' : 'bg-orange-400'"
-      style="clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);"
+  <div class="flex flex-col items-center gap-1"       
       @dragover="onDragOver"
       @dragleave="onDragLeave"
-      @drop="onMainDrop"
+      @drop="onDrop">
+    <!-- Main hexagon -->
+    <div
+      class="w-30 xl:w-36 2xl:w-40 aspect-square cursor-pointer group relative"
+      :class="isHovering && (currentInventoryDrag?.type === 'champion' || isHoveringItemValid) ? 'bg-orange-400/60 shadow-[0_0_25px_rgba(249,115,22,0.9)]' : 'bg-orange-400'"
+      style="clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);"
+      @click="onClick"
     >
       <img
         v-if="main"
@@ -19,14 +20,12 @@
     </div>
 
     <!-- Sub slots -->
-    <div class="flex gap-1 transition-opacity duration-200">
-      <template v-for="(sub, i) in subs" :key="i">
+    <div class="flex gap-1 transition-opacity duration-200" :class="{'pointer-events-none': isHovering}">
+      <template v-for="(sub, i) in subs" :key="i" >
         <div
-          v-show="(isHovering && currentInventoryDrag?.type === 'item') || sub"
+          v-show="isHoveringItemValid || sub"
           class="w-6 h-6 border-2 border-gray-400 rounded relative -mt-15"
-          :class="subHovering[i] ? 'bg-gray-200/50' : ''"
-          @dragover="(e) => onSubDragOver(e, i)"
-          @dragleave="() => onSubDragLeave(i)"
+          @click="onSubClick(i, $event)"
         >
           <img
             v-if="sub"
@@ -42,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 export interface DragItem {
   type: string;
@@ -58,44 +57,48 @@ const props = defineProps<{
 const emits = defineEmits<{
   (e: 'drag-start', item: DragItem): void
   (e: 'drop-main', item: DragItem): void
-  (e: 'drop-sub', item: DragItem ): void
+  (e: 'drop-sub', item: DragItem): void
+  (e: 'remove-main'): void
+  (e: 'remove-sub', index: number): void
 }>();
 
 const isHovering = ref(false);
-const subHovering = ref([false, false, false]);
+
+//COMPUTED
+const isHoveringItemValid = computed(() => isHovering.value && props.currentInventoryDrag?.type === 'item' && props.main)
+
+//METHODS
+function onClick(e: MouseEvent) {
+  if (e.ctrlKey || e.metaKey) {
+    emits('remove-main');
+  }
+}
+
+function onSubClick(index: number, e: MouseEvent) {
+  // Ctrl (Win/Linux) or Command (Mac)
+  if (e.ctrlKey || e.metaKey) {
+    emits('remove-sub', index);
+  }
+}
 
 function onDragOver(e: DragEvent) {
   e.preventDefault();
   isHovering.value = true;
-
-  if (props.currentInventoryDrag && props.currentInventoryDrag.type !== 'champion') {
-  }
 }
 
 function onDragLeave() {
   isHovering.value = false;
 }
 
-function onSubDragOver(e: DragEvent, i: number) {
-  e.preventDefault();
-  subHovering.value[i] = true;
-}
-function onSubDragLeave(i: number) {
-  subHovering.value[i] = false;
-}
-
-function onMainDrop(e: DragEvent) {
-
+function onDrop(e: DragEvent) {
   e.preventDefault(); 
   isHovering.value = false; 
   if (!props.currentInventoryDrag) return; 
   const { type } = props.currentInventoryDrag; 
   if(type === 'champion') {
-  emits('drop-main', props.currentInventoryDrag);
-
+    emits('drop-main', props.currentInventoryDrag);
   } else {
-      emits('drop-sub', props.currentInventoryDrag);
-
+    emits('drop-sub', props.currentInventoryDrag);
   }
 }
 

@@ -42,11 +42,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import type { DragItem } from './BoardComponent.vue';
 
-export interface DragItem {
-  type: string;
-  src: string;
-}
 
 const props = defineProps<{
   currentInventoryDrag: DragItem | null

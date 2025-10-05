@@ -1236,1276 +1236,1031 @@ export const championTraits = [
 
 export const items = [
     {
-        "id": "PM_Bomber",
-        "name": "EXPLOSIF"
-    },
-    {
-        "id": "PM_Close",
-        "name": "EXTORQUEUR"
-    },
-    {
-        "id": "PM_Committed",
-        "name": "DÉVOUÉ"
-    },
-    {
-        "id": "PM_DangerHexes",
-        "name": "MALÉDICTION STELLAIRE"
-    },
-    {
-        "id": "PM_Fortified",
-        "name": "FORTIFIÉ"
-    },
-    {
-        "id": "PM_FreeWill",
-        "name": "PRÉDICTION"
-    },
-    {
-        "id": "PM_Hellion",
-        "name": "TRUBLION"
-    },
-    {
-        "id": "PM_Mascot",
-        "name": "ENCOURAGEANT"
-    },
-    {
-        "id": "PM_Physical",
-        "name": "PHYSIQUE"
-    },
-    {
-        "id": "PM_Restart",
-        "name": "RETOUR À ZÉRO"
-    },
-    {
-        "id": "PM_Subtractor",
-        "name": "SOUSTRACTEUR"
-    },
-    {
-        "id": "PM_Void",
-        "name": "NÉANT"
-    },
-    {
-        "id": "TFT11_Item_ThiefsGlovesSupport",
-        "name": "Gants de complice"
-    },
-    {
-        "id": "TFT14_Consumable_Salvager",
-        "name": "Recycleur"
-    },
-    {
-        "id": "TFT14_Consumable_SizeUp3",
-        "name": "Implant : taille"
-    },
-    {
-        "id": "TFT14_Consumable_SpeedUp",
-        "name": "Implant : vitesse"
-    },
-    {
         "id": "TFT15_Item_BastionEmblemItem",
-        "name": "Emblème de Bastion"
+        "name": "Bastion Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Bastion trait.<br>Gain 15% of Armor as Attack Damage.<br>Gain 15% of Magic Resistance as Ability Power.",
+        "build": [
+            "TFT_Item_ChainVest",
+            "TFT_Item_FryingPan"
+        ],
+        "incompatibleTraits": [
+            "TFT15_Bastion"
+        ],
+        "emblemTrait": "TFT15_Bastion",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_BattleAcademiaEmblemItem",
-        "name": "Emblème de l'Académie du combat"
+        "name": "Battle Academia Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Battle Academia trait, and 120 Health and 6% Damage Amp per %i:set14AmpIcon%.",
+        "build": [
+            "TFT_Item_Spatula",
+            "TFT_Item_TearOfTheGoddess"
+        ],
+        "incompatibleTraits": [
+            "TFT15_BattleAcademia"
+        ],
+        "emblemTrait": "TFT15_BattleAcademia",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_ChallengerEmblemItem",
-        "name": "Emblème de Duelliste"
+        "name": "Duelist Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Duelist trait.<br><br>Attacks deal 12 bonus true damage, plus 6 bonus true damage for each time the target was damaged by this effect.",
+        "build": [
+            "TFT_Item_FryingPan",
+            "TFT_Item_RecurveBow"
+        ],
+        "incompatibleTraits": [
+            "TFT15_Duelist"
+        ],
+        "emblemTrait": "TFT15_Duelist",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_CrystalRoseEmblemItem",
-        "name": "Emblème de Gambit de cristal"
+        "name": "Crystal Gambit Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Crystal Gambit trait.",
+        "build": [
+            "TFT_Item_GiantsBelt",
+            "TFT_Item_Spatula"
+        ],
+        "incompatibleTraits": [
+            "TFT15_GemForce"
+        ],
+        "emblemTrait": "TFT15_GemForce",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_CrystalRoseHellionItem",
-        "name": "Renforts cristallins"
+        "name": "Crystalline Reinforcements",
+        "kind": "misc",
+        "description": "Your team gains 1000 health. Whenever a unit dies, a crystalline copy one star level lower joins the fight!",
+        "build": []
     },
     {
         "id": "TFT15_Item_DestroyerEmblemItem",
-        "name": "Emblème d'Exécuteur"
+        "name": "Executioner Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Executioner trait.<br>Attacks and Abilities that critically strike deal 20% bonus true damage over 3 seconds.",
+        "build": [
+            "TFT_Item_FryingPan",
+            "TFT_Item_SparringGloves"
+        ],
+        "incompatibleTraits": [
+            "TFT15_Destroyer"
+        ],
+        "emblemTrait": "TFT15_Destroyer",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_DragonFistFighterStance",
-        "name": "Posture du Duelliste"
+        "name": "Duelist Stance",
+        "kind": "misc",
+        "description": "<spellPassive>Passive:</spellPassive> On attack, deal <physicalDamage>40 (%i:scaleAD%)</physicalDamage> physical damage to a nearby enemy.<br><br><spellActive>Active: </spellActive> Strike swiftly, sending <TFTBonus>10 (%i:scaleAS%)</TFTBonus> afterimages to the nearest 2 enemies. Each deals <physicalDamage>65 (%i:scaleAD%)</physicalDamage> physical damage and reduces armor by <TFTBonus>5 (%i:scaleAP%)</TFTBonus>.",
+        "build": []
     },
     {
         "id": "TFT15_Item_DragonFistReaperStance",
-        "name": "Posture de l'Exécuteur"
+        "name": "Executioner Stance",
+        "kind": "misc",
+        "description": "Deal <physicalDamage>330 (%i:scaleAD%%i:scaleAP%)</physicalDamage> physical damage to the lowest Health enemy within 3 hexes and <TFTKeyword>Stun</TFTKeyword> them for 1.5 seconds. Other enemies in a 1-hex radius take <physicalDamage>130 (%i:scaleAD%)</physicalDamage> physical damage. <br><br>After 3 kills with this ability all enemies instantly take <physicalDamage>180 (%i:scaleAD%)</physicalDamage> physical damage and are <TFTKeyword>Stunned</TFTKeyword> for 1.5 seconds.",
+        "build": []
     },
     {
         "id": "TFT15_Item_DragonFistTankStance",
-        "name": "Posture du Colosse"
+        "name": "Juggernaut Stance",
+        "kind": "misc",
+        "description": "Briefly gain <scaleLevel>60%</scaleLevel> Durability, then deal <physicalDamage>500 (%i:scaleAD%%i:scaleAP%)</physicalDamage> physical damage to the target, <physicalDamage>200 (%i:scaleAD%)</physicalDamage> physical damage to all enemies behind the target, and <physicalDamage>150 (%i:scaleAD%)</physicalDamage> physical damage to other enemies in a 2-hex radius.",
+        "build": []
     },
     {
         "id": "TFT15_Item_EdgelordEmblemItem",
-        "name": "Emblème d'Edgelord"
+        "name": "Edgelord Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Edgelord trait.<br>Dealing physical damage to an enemy reduces their Armor by 2.",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_FryingPan"
+        ],
+         "incompatibleTraits": [
+            "TFT15_Edgelord"
+        ],
+        "emblemTrait": "TFT15_Edgelord",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_EmpyreanEmblemItem",
-        "name": "Emblème de Spectre"
+        "name": "Wraith Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Wraith trait.",
+        "build": [
+            "TFT_Item_ChainVest",
+            "TFT_Item_Spatula"
+        ],
+        "incompatibleTraits": [
+            "TFT15_Empyrean"
+        ],
+        "emblemTrait": "TFT15_Empyrean",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_HeavyweightEmblemItem",
-        "name": "Emblème de Poids lourd"
+        "name": "Heavyweight Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Heavyweight trait, and gains 150 max Health on takedown.",
+        "build": [
+            "TFT_Item_FryingPan",
+            "TFT_Item_GiantsBelt"
+        ],
+        "incompatibleTraits": [
+            "TFT15_Heavyweight"
+        ],
+        "emblemTrait": "TFT15_Heavyweight",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_JuggernautEmblemItem",
-        "name": "Emblème de Colosse"
+        "name": "Juggernaut Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Juggernaut trait.<br>While above 50% Health, gain 30% Attack Speed.",
+        "build": [
+            "TFT_Item_FryingPan",
+            "TFT_Item_NegatronCloak"
+        ],
+        "incompatibleTraits": [
+            "TFT15_Juggernaut"
+        ],
+        "emblemTrait": "TFT15_Juggernaut",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_LimitBreak",
-        "name": "tft15_LimitBreak_Item_name"
+        "name": "tft15_LimitBreak_Item_name",
+        "kind": "consumable",
+        "description": "tft15_LimitBreak_Item_description",
+        "build": []
     },
     {
         "id": "TFT15_Item_ProdigyEmblemItem",
-        "name": "Emblème de Prodige"
+        "name": "Prodigy Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Prodigy trait.<br>On cast, shield the lowest percent Health ally for 250% of mana spent.",
+        "build": [
+            "TFT_Item_FryingPan",
+            "TFT_Item_TearOfTheGoddess"
+        ],
+        "incompatibleTraits": [
+            "TFT15_Prodigy"
+        ],
+        "emblemTrait": "TFT15_Prodigy",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_ProtectorEmblemItem",
-        "name": "Emblème de Protecteur"
+        "name": "Protector Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Protector trait.<br>When a shield on the holder breaks, heal the holder and the nearest ally for 20% of the shield's initial value.",
+        "build": [],
+        "incompatibleTraits": [
+            "TFT15_Protector"
+        ],
+        "emblemTrait": "TFT15_Protector",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_RingKingsEmblemItem",
-        "name": "Emblème de Luchador"
+        "name": "Luchador Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Luchador trait.",
+        "build": [
+            "TFT_Item_SparringGloves",
+            "TFT_Item_Spatula"
+        ],
+        "incompatibleTraits": [
+            "TFT15_Luchador"
+        ],
+        "emblemTrait": "TFT15_Luchador",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_ShotcallerEmblemItem",
-        "name": "Emblème de Stratège"
+        "name": "Strategist Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Strategist trait.<br><br>Combat Start: The holder and allies within 1 hex in the same row gain bonuses.<br>Front 2 rows: 20 Armor and Magic Resist<br>Back 2 rows: 15% Attack Speed",
+        "build": [
+            "TFT_Item_NegatronCloak",
+            "TFT_Item_Spatula"
+        ],
+        "incompatibleTraits": [
+            "TFT15_Strategist"
+        ],
+        "emblemTrait": "TFT15_Strategist",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_SniperEmblemItem",
-        "name": "Emblème de Sniper"
+        "name": "Sniper Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Sniper trait and 2 range.",
+        "build": [],
+        "incompatibleTraits": [
+            "TFT15_Sniper"
+        ],
+        "emblemTrait": "TFT15_Sniper",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_SoulFighterEmblemItem",
-        "name": "Emblème de Combattant spirituel"
+        "name": "Soul Fighter Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Soul Fighter trait.",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_Spatula"
+        ],
+        "incompatibleTraits": [
+            "TFT15_SoulFighter"
+        ],
+        "emblemTrait": "TFT15_SoulFighter",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_SpellslingerEmblemItem",
-        "name": "Emblème de Sorcier"
+        "name": "Sorcerer Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Sorcerer trait.<br>The holder gains 18% more Ability Power from all sources.",
+        "build": [
+            "TFT_Item_FryingPan",
+            "TFT_Item_NeedlesslyLargeRod"
+        ],
+        "unique": true,
+        "emblemTrait": "TFT15_Spellslinger",
+        "incompatibleTraits": [
+            "TFT15_Spellslinger"
+        ],
     },
     {
         "id": "TFT15_Item_StarGuardianEmblemItem",
-        "name": "Emblème de Gardienne des étoiles"
+        "name": "Star Guardian Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Star Guardian trait.<br><br><TFTBonus>Teamwork: </TFTBonus> Non-emblem Star Guardian bonuses are increased by 10%. This effect stacks.<br><br><tftitemrules>[Unique - only 1 per champion.]</tftitemrules>",
+        "build": [
+            "TFT_Item_NeedlesslyLargeRod",
+            "TFT_Item_Spatula"
+        ],
+        "incompatibleTraits": [
+            "TFT15_StarGuardian"
+        ],
+        "emblemTrait": "TFT15_StarGuardian",
+        "unique": true,
     },
     {
         "id": "TFT15_Item_SupremeCellsEmblemItem",
-        "name": "Emblème de Cellules suprêmes"
-    },
-    {
-        "id": "TFT15_MechanicTrait_BloodFury_Consumable",
-        "name": "Petit creux"
-    },
-    {
-        "id": "TFT15_RoboRanger_Core",
-        "name": "Travail d'équipe"
-    },
-    {
-        "id": "TFT15_RoboRanger_Slicer",
-        "name": "Super-lame renforcée"
-    },
-    {
-        "id": "TFT15_RoboRanger_Sword",
-        "name": "Méga-lame"
-    },
-    {
-        "id": "TFT15_SetMechanic_Consumable",
-        "name": "Power up"
-    },
-    {
-        "id": "TFT15_SetMechanic_Consumable_2",
-        "name": "Libérateur de puissance (2 utilisations restantes)"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover",
-        "name": "Suppresseur de power up"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover_10",
-        "name": "Suppresseur de power up (9 utilisations restantes)"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover_2",
-        "name": "Suppresseur de power up (2 utilisations restantes)"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover_3",
-        "name": "Suppresseur de power up (3 utilisations restantes)"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover_4",
-        "name": "Suppresseur de power up (4 utilisations restantes)"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover_5",
-        "name": "Suppresseur de power up (5 utilisations restantes)"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover_6",
-        "name": "Suppresseur de power up (6 utilisations restantes)"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover_7",
-        "name": "Suppresseur de power up (7 utilisations restantes)"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover_8",
-        "name": "Suppresseur de power up (8 utilisations restantes)"
-    },
-    {
-        "id": "TFT15_SetMechanic_Remover_9",
-        "name": "Suppresseur de power up (9 utilisations restantes)"
-    },
-    {
-        "id": "TFT4_Item_OrnnDeathsDefiance",
-        "name": "Refus de la mort"
-    },
-    {
-        "id": "TFT4_Item_OrnnEternalWinter",
-        "name": "Hiver éternel"
-    },
-    {
-        "id": "TFT4_Item_OrnnInfinityForce",
-        "name": "Force de l'infini"
-    },
-    {
-        "id": "TFT4_Item_OrnnMuramana",
-        "name": "Manazane"
-    },
-    {
-        "id": "TFT4_Item_OrnnObsidianCleaver",
-        "name": "Couperet d'obsidienne"
-    },
-    {
-        "id": "TFT4_Item_OrnnRanduinsSanctum",
-        "name": "Présage de Randuin"
-    },
-    {
-        "id": "TFT4_Item_OrnnTheCollector",
-        "name": "Collecteur d'or"
-    },
-    {
-        "id": "TFT4_Item_OrnnZhonyasParadox",
-        "name": "Paradoxe de Zhonya"
-    },
-    {
-        "id": "TFT5_Item_AdaptiveHelmRadiant",
-        "name": "Casque adaptatif de la lumière"
-    },
-    {
-        "id": "TFT5_Item_ArchangelsStaffRadiant",
-        "name": "Bâton de l'archange de la lumière"
-    },
-    {
-        "id": "TFT5_Item_BloodthirsterRadiant",
-        "name": "Soif-de-sang de la lumière"
-    },
-    {
-        "id": "TFT5_Item_BlueBuffRadiant",
-        "name": "Buff bleu de la lumière"
-    },
-    {
-        "id": "TFT5_Item_BrambleVestRadiant",
-        "name": "Armure roncière de la lumière"
-    },
-    {
-        "id": "TFT5_Item_CrownguardRadiant",
-        "name": "Couronne de la reine de la lumière"
-    },
-    {
-        "id": "TFT5_Item_DeathbladeRadiant",
-        "name": "Lame funeste de la lumière"
-    },
-    {
-        "id": "TFT5_Item_DragonsClawRadiant",
-        "name": "Griffe de dragon de la lumière"
-    },
-    {
-        "id": "TFT5_Item_FrozenHeartRadiant",
-        "name": "Vœu du protecteur de la lumière"
-    },
-    {
-        "id": "TFT5_Item_GargoyleStoneplateRadiant",
-        "name": "Lithoplastron de gargouille de la lumière"
-    },
-    {
-        "id": "TFT5_Item_GiantSlayerRadiant",
-        "name": "Tueur de géants de la lumière"
-    },
-    {
-        "id": "TFT5_Item_GuardianAngelRadiant",
-        "name": "Manteau de la nuit de la lumière"
-    },
-    {
-        "id": "TFT5_Item_GuinsoosRagebladeRadiant",
-        "name": "Lame enragée de Guinsoo de la lumière"
-    },
-    {
-        "id": "TFT5_Item_HandOfJusticeRadiant",
-        "name": "Main de la justice de la lumière"
-    },
-    {
-        "id": "TFT5_Item_HextechGunbladeRadiant",
-        "name": "Pistolame Hextech de la lumière"
-    },
-    {
-        "id": "TFT5_Item_InfinityEdgeRadiant",
-        "name": "Lame d'infini de la lumière"
-    },
-    {
-        "id": "TFT5_Item_IonicSparkRadiant",
-        "name": "Étincelle ionique de la lumière"
-    },
-    {
-        "id": "TFT5_Item_JeweledGauntletRadiant",
-        "name": "Gantelet précieux de la lumière"
-    },
-    {
-        "id": "TFT5_Item_LastWhisperRadiant",
-        "name": "Dernier souffle de la lumière"
-    },
-    {
-        "id": "TFT5_Item_LeviathanRadiant",
-        "name": "Dent de Nashor de la lumière"
-    },
-    {
-        "id": "TFT5_Item_MorellonomiconRadiant",
-        "name": "Morellonomicon de la lumière"
-    },
-    {
-        "id": "TFT5_Item_NightHarvesterRadiant",
-        "name": "Cœur intrépide de la lumière"
-    },
-    {
-        "id": "TFT5_Item_QuicksilverRadiant",
-        "name": "Mercure de la lumière"
-    },
-    {
-        "id": "TFT5_Item_RabadonsDeathcapRadiant",
-        "name": "Coiffe de Rabadon de la lumière"
-    },
-    {
-        "id": "TFT5_Item_RapidFirecannonRadiant",
-        "name": "Buff rouge de la lumière"
-    },
-    {
-        "id": "TFT5_Item_RedemptionRadiant",
-        "name": "Visage spirituel de la lumière"
-    },
-    {
-        "id": "TFT5_Item_RunaansHurricaneRadiant",
-        "name": "Fureur du kraken de la lumière"
-    },
-    {
-        "id": "TFT5_Item_SpearOfShojinRadiant",
-        "name": "Lance de Shojin de la lumière"
-    },
-    {
-        "id": "TFT5_Item_SpectralGauntletRadiant",
-        "name": "Linceul de la congruence de la lumière"
-    },
-    {
-        "id": "TFT5_Item_StatikkShivRadiant",
-        "name": "Bâton du vide de la lumière"
-    },
-    {
-        "id": "TFT5_Item_SteraksGageRadiant",
-        "name": "Gage de Sterak de la lumière"
-    },
-    {
-        "id": "TFT5_Item_SunfireCapeRadiant",
-        "name": "Cape solaire de la lumière"
-    },
-    {
-        "id": "TFT5_Item_ThiefsGlovesRadiant",
-        "name": "Gants de voleur de la lumière"
-    },
-    {
-        "id": "TFT5_Item_TitansResolveRadiant",
-        "name": "Détermination du titan de la lumière"
-    },
-    {
-        "id": "TFT5_Item_TrapClawRadiant",
-        "name": "Fléau vengeur de la lumière"
-    },
-    {
-        "id": "TFT5_Item_WarmogsArmorRadiant",
-        "name": "Armure de Warmog de la lumière"
-    },
-    {
-        "id": "TFT5_Item_ZzRotPortalRadiant",
-        "name": "Portail de Zz'Rot"
-    },
-    {
-        "id": "TFT7_Item_ShimmerscaleDeterminedInvestor",
-        "name": "Investisseur déterminé"
-    },
-    {
-        "id": "TFT7_Item_ShimmerscaleDiamondHands",
-        "name": "Mains de diamant"
-    },
-    {
-        "id": "TFT7_Item_ShimmerscaleGamblersBlade",
-        "name": "Lame du parieur"
-    },
-    {
-        "id": "TFT7_Item_ShimmerscaleGamblersBlade_HR",
-        "name": "Lame du parieur"
-    },
-    {
-        "id": "TFT7_Item_ShimmerscaleHeartOfGold",
-        "name": "Gemme trop grosse"
-    },
-    {
-        "id": "TFT7_Item_ShimmerscaleHeartOfGold_HR",
-        "name": "Gemme trop grosse"
-    },
-    {
-        "id": "TFT7_Item_ShimmerscaleMogulsMail",
-        "name": "Mailles du magnat"
-    },
-    {
-        "id": "TFT7_Item_ShimmerscaleMogulsMail_HR",
-        "name": "Mailles du magnat"
-    },
-    {
-        "id": "TFT9_Consumable_GoldenItemRemover",
-        "name": "Suppresseur d'objet doré"
-    },
-    {
-        "id": "TFT9_Item_CrownOfDemacia",
-        "name": "Couronne de Demacia"
-    },
-    {
-        "id": "TFT9_Item_OrnnDeathfireGrasp",
-        "name": "Bracelet de feu mortel"
-    },
-    {
-        "id": "TFT9_Item_OrnnDuskbladeOfDraktharr",
-        "name": "Griffes du rôdeur de Crocc"
-    },
-    {
-        "id": "TFT9_Item_OrnnHorizonFocus",
-        "name": "Concentration du sniper"
-    },
-    {
-        "id": "TFT9_Item_OrnnHullbreaker",
-        "name": "Fracasse-coques"
-    },
-    {
-        "id": "TFT9_Item_OrnnPrototypeForge",
-        "name": "Gants de forgeron"
-    },
-    {
-        "id": "TFT9_Item_OrnnTrickstersGlass",
-        "name": "Miroir de l'illusionniste"
-    },
-    {
-        "id": "TFTEventPM_Armory_SorakaGolem_Carry",
-        "name": "Attaquant de ligne arrière"
-    },
-    {
-        "id": "TFTEventPM_Armory_SorakaGolem_Carry_Lesser",
-        "name": "Attaquant de ligne arrière"
-    },
-    {
-        "id": "TFTEventPM_Armory_SorakaGolem_RNG",
-        "name": "Curiosité"
-    },
-    {
-        "id": "TFTEventPM_Armory_SorakaGolem_RNG_Lesser",
-        "name": "Curiosité"
-    },
-    {
-        "id": "TFTEventPM_Armory_SorakaGolem_Tank",
-        "name": "Tank de première ligne"
-    },
-    {
-        "id": "TFTEventPM_Armory_SorakaGolem_Tank_Lesser",
-        "name": "Tank de première ligne"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_CursedBlade",
-        "name": "Lame maudite"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_Dawncore",
-        "name": "Cœur de l'aube"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_Fishbones",
-        "name": "Poiscaille"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_Gold_Dawncore",
-        "name": "Cœur de l'aube de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_Gold_Fishbones",
-        "name": "Poiscaille de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_Gold_InnervatingLocket",
-        "name": "Médaillon d'excitation de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_Gold_NavoriFlickerblades",
-        "name": "Tremblelame de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_Gold_SilvermereDawn",
-        "name": "Aube de Haut-Lac-d'Argent de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_Gold_TalismanOfAscension",
-        "name": "Talisman de l'ascension de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_Gold_TitanicHydra",
-        "name": "Hydre titanesque de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_InnervatingLocket",
-        "name": "Médaillon d'excitation"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_NavoriFlickerblades",
-        "name": "Tremblelames"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_SilvermereDawn",
-        "name": "Aube de Haut-Lac-d'Argent"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_TalismanOfAscension",
-        "name": "Talisman de l'ascension"
-    },
-    {
-        "id": "TFTEventPM_Item_Artifact_TitanicHydra",
-        "name": "Hydre titanesque"
-    },
-    {
-        "id": "TFTEventPM_Item_AssassinsBlade",
-        "name": "Lame d'assassin"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Gold_DestabilizedChemtank",
-        "name": "Chimico-scaphandre douteux"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Gold_ExecutionersVorpalblade",
-        "name": "Lame-chaîne du bourreau"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Gold_FleshRipper",
-        "name": "Écorcheur"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Gold_PiltovenHexplating",
-        "name": "Armure Hextech de Piltover"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Gold_ShimmerBloom",
-        "name": "Fleur de shimmer"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Gold_UnleashedToxins",
-        "name": "Toxines"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Gold_VirulentVirus",
-        "name": "Virus virulent"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Gold_VoltaicSaber",
-        "name": "Sabre voltaïque"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Prismatic_DestabilizedChemtank",
-        "name": "Chimico-scaphandre douteux perfectionné"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Prismatic_ExecutionersVorpalblade",
-        "name": "Lame-chaîne du bourreau perfectionnée"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Prismatic_FleshRipper",
-        "name": "Écorcheur perfectionné"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Prismatic_PiltovenHexplating",
-        "name": "Armure Hextech de Piltover perfectionnée"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Prismatic_ShimmerBloom",
-        "name": "Fleur de shimmer perfectionnée"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Prismatic_UnleashedToxins",
-        "name": "Toxines perfectionnées"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Prismatic_VirulentVirus",
-        "name": "Virus virulent perfectionné"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Prismatic_VoltaicSaber",
-        "name": "Sabre voltaïque perfectionné"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Silver_DestabilizedChemtank",
-        "name": "Chimico-scaphandre douteux"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Silver_ExecutionersVorpalblade",
-        "name": "Lame-chaîne du bourreau"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Silver_FleshRipper",
-        "name": "Écorcheur"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Silver_PiltovenHexplating",
-        "name": "Armure Hextech de Piltover"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Silver_ShimmerBloom",
-        "name": "Fleur de shimmer"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Silver_UnleashedToxins",
-        "name": "Toxines"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Silver_VirulentVirus",
-        "name": "Virus virulent"
-    },
-    {
-        "id": "TFTEventPM_Item_Crime_Silver_VoltaicSaber",
-        "name": "Sabre voltaïque"
-    },
-    {
-        "id": "TFTEventPM_Item_Gold_AssassinsBlade",
-        "name": "Lame d'assassin de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Gold_OrnnHorizonFocus",
-        "name": "Concentration du sniper de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Gold_OrnnHullbreaker",
-        "name": "Fracasse-coques de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Gold_OrnnMuramana",
-        "name": "Manazane de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_Gold_OrnnTrickstersGlass",
-        "name": "Miroir de l'illusionniste de Gwen"
-    },
-    {
-        "id": "TFTEventPM_Item_HextechSniper",
-        "name": "Fusil de précision Hextech"
-    },
-    {
-        "id": "TFTEventPM_Item_InkshadowHorse",
-        "name": "Tatouage de force"
-    },
-    {
-        "id": "TFTEventPM_Item_InkshadowOx",
-        "name": "Tatouage de vitalité"
-    },
-    {
-        "id": "TFTEventPM_Item_InkshadowPig",
-        "name": "Tatouage de protection"
-    },
-    {
-        "id": "TFTEventPM_Item_InkshadowRat",
-        "name": "Tatouage de bombardement"
-    },
-    {
-        "id": "TFTEventPM_Item_InkshadowSnake",
-        "name": "Tatouage de toxicité"
-    },
-    {
-        "id": "TFTEventPM_Item_InkshadowTiger",
-        "name": "Tatouage de fureur"
-    },
-    {
-        "id": "TFTEventPM_Item_JaxCyberneticItem",
-        "name": "TechnoLanterne"
-    },
-    {
-        "id": "TFTEventPM_Item_JaxCyberneticItem_Radiant",
-        "name": "TechnoLanterne inhibitrice"
-    },
-    {
-        "id": "TFTEventPM_Item_JhinCyberneticItem",
-        "name": "Stabilisateur d'impulsions"
-    },
-    {
-        "id": "TFTEventPM_Item_JhinCyberneticItem_Radiant",
-        "name": "Suppresseur d'impulsions"
-    },
-    {
-        "id": "TFTEventPM_Item_MordekaiserCyberneticItem",
-        "name": "Châssis corrompu"
-    },
-    {
-        "id": "TFTEventPM_Item_MordekaiserCyberneticItem_Radiant",
-        "name": "Châssis harmonisé"
-    },
-    {
-        "id": "TFTEventPM_Item_NaafiriCyberneticItem",
-        "name": "Hyper crocs"
-    },
-    {
-        "id": "TFTEventPM_Item_NaafiriCyberneticItem_Radiant",
-        "name": "Crocs alpha"
-    },
-    {
-        "id": "TFTEventPM_Item_OrnnHorizonFocus",
-        "name": "Concentration du sniper"
-    },
-    {
-        "id": "TFTEventPM_Item_OrnnHullbreaker",
-        "name": "Fracasse-coques"
-    },
-    {
-        "id": "TFTEventPM_Item_OrnnMuramana",
-        "name": "Manazane"
-    },
-    {
-        "id": "TFTEventPM_Item_OrnnTrickstersGlass",
-        "name": "Miroir de l'illusionniste"
-    },
-    {
-        "id": "TFTEventPM_Item_SejuaniCyberneticItem",
-        "name": "Bobine cybernétique"
-    },
-    {
-        "id": "TFTEventPM_Item_SejuaniCyberneticItem_Radiant",
-        "name": "Bobine protocybernétique"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_InkshadowHorse",
-        "name": "Tatouage de force"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_InkshadowOx",
-        "name": "Tatouage de vitalité"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_InkshadowPig",
-        "name": "Tatouage de protection"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_InkshadowRat",
-        "name": "Tatouage de bombardement"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_InkshadowSnake",
-        "name": "Tatouage de toxicité"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_InkshadowTiger",
-        "name": "Tatouage de fureur"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_JaxCyberneticItem",
-        "name": "TechnoLanterne"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_JhinCyberneticItem",
-        "name": "Stabilisateur d'impulsions"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_MordekaiserCyberneticItem",
-        "name": "Châssis corrompu"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_NaafiriCyberneticItem",
-        "name": "Hyper crocs"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_SejuaniCyberneticItem",
-        "name": "Bobine cybernétique"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_VarusCyberneticItem",
-        "name": "Arc holographique"
-    },
-    {
-        "id": "TFTEventPM_Item_Silver_ZeriCyberneticItem",
-        "name": "Capaciteur de flux"
-    },
-    {
-        "id": "TFTEventPM_Item_VarusCyberneticItem",
-        "name": "Arc holographique"
-    },
-    {
-        "id": "TFTEventPM_Item_VarusCyberneticItem_Radiant",
-        "name": "Arc holographique traqueur"
-    },
-    {
-        "id": "TFTEventPM_Item_Yasuo_DragonEarth",
-        "name": "Esprit du dragon de terre"
-    },
-    {
-        "id": "TFTEventPM_Item_Yasuo_DragonFire",
-        "name": "Esprit du dragon de feu"
-    },
-    {
-        "id": "TFTEventPM_Item_Yasuo_DragonJade",
-        "name": "Esprit du dragon de jade"
-    },
-    {
-        "id": "TFTEventPM_Item_Yasuo_DragonSpiritInfo",
-        "name": "Maître d'esprit de dragon"
-    },
-    {
-        "id": "TFTEventPM_Item_Yasuo_DragonWater",
-        "name": "Esprit du dragon d'eau"
-    },
-    {
-        "id": "TFTEventPM_Item_Yasuo_DragonWhisper",
-        "name": "Esprit du dragon sombre"
-    },
-    {
-        "id": "TFTEventPM_Item_ZeriCyberneticItem",
-        "name": "Capaciteur de flux"
-    },
-    {
-        "id": "TFTEventPM_Item_ZeriCyberneticItem_Radiant",
-        "name": "Capaciteur de flux hacké"
-    },
-    {
-        "id": "TFTEvent_PM_Item_BossBadge",
-        "name": "Ombre de la montagne"
-    },
-    {
-        "id": "TFTEvent_PM_Item_Gold_RocketFist",
-        "name": "Poing propulsé de Gwen"
-    },
-    {
-        "id": "TFTEvent_PM_Item_RocketFist",
-        "name": "Poing propulsé"
-    },
-    {
-        "id": "TFTEvent_PM_Item_Tracker",
-        "name": "Boy-scout"
-    },
-    {
-        "id": "TFT_Augment_Changeling_GlamourItemTier1",
-        "name": "Mutateur"
-    },
-    {
-        "id": "TFT_Augment_Changeling_GlamourItemTier2",
-        "name": "Mutateur"
-    },
-    {
-        "id": "TFT_Augment_Changeling_GlamourItemTier3",
-        "name": "Mutateur"
-    },
-    {
-        "id": "TFT_Augment_Changeling_GlamourItemTier4",
-        "name": "Mutateur"
-    },
-    {
-        "id": "TFT_Augment_Changeling_GlamourItemTier5",
-        "name": "Mutateur"
-    },
-    {
-        "id": "TFT_Consumable_ChampionDuplicator_I",
-        "name": "Duplicateur de champion riquiqui"
-    },
-    {
-        "id": "TFT_Consumable_ChampionDuplicator_III",
-        "name": "Duplicateur de champion mineur"
-    },
-    {
-        "id": "TFT_Consumable_ItemRemover",
-        "name": "Suppresseur magnétique"
-    },
-    {
-        "id": "TFT_Consumable_ItemReroller",
-        "name": "Reforgeur"
-    },
-    {
-        "id": "TFT_Consumable_MasterworkUpgrade",
-        "name": "Et la lumière fut"
-    },
-    {
-        "id": "TFT_Consumable_NeekosHelp",
-        "name": "Duplicateur de champion"
-    },
-    {
-        "id": "TFT_Consumable_PocketRecombobulator",
-        "name": "Recombobulateur de poche"
-    },
-    {
-        "id": "TFT_Consumable_RecommendedArmory",
-        "name": "Coffre d'objets chanceux"
-    },
-    {
-        "id": "TFT_Consumable_RecommendedArmoryRadiant",
-        "name": "Coffre chanceux de la lumière"
-    },
-    {
-        "id": "TFT_Consumable_ShopReroller",
-        "name": "Dé pipé"
-    },
-    {
-        "id": "TFT_Consumable_TrashToTreasure_Reforger",
-        "name": "Reforgeur"
+        "name": "Supreme Cells Emblem",
+        "kind": "emblem",
+        "description": "The holder gains the Supreme Cells trait.",
+        "build": [
+            "TFT_Item_RecurveBow",
+            "TFT_Item_Spatula"
+        ],
+        "incompatibleTraits": [
+            "TFT15_SupremeCells"
+        ],
+        "emblemTrait": "TFT15_SupremeCells",
+        "unique": true,
     },
     {
         "id": "TFT_Item_AdaptiveHelm",
-        "name": "Casque adaptatif"
+        "name": "Adaptive Helm",
+        "kind": "advanced",
+        "description": "Gain an additional 15% Mana from all sources. The wearer gains an additional bonus based on their Role:<br><br>Tanks and Fighters: Gain 35 Armor and Magic Resistance.<br><br>Other Roles: Gain 15 Attack Damage and Ability Power.",
+        "build": [
+            "TFT_Item_NegatronCloak",
+            "TFT_Item_TearOfTheGoddess"
+        ]
     },
     {
         "id": "TFT_Item_AegisOfTheLegion",
-        "name": "Égide de la légion"
+        "name": "Aegis of the Legion",
+        "kind": "support",
+        "description": "Combat start: Grant 25% Attack Speed and 15 Armor and Magic Resist to the holder, adjacent allies in the same row, and all allies behind them for 12 seconds.<br><br>​​<tftitemrules>[Support item]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_ArchangelsStaff",
-        "name": "Bâton de l'archange"
+        "name": "Archangel's Staff",
+        "kind": "advanced",
+        "description": "Combat start: Gain 20 Ability Power every 5 seconds in combat.",
+        "build": [
+            "TFT_Item_NeedlesslyLargeRod",
+            "TFT_Item_TearOfTheGoddess"
+        ]
     },
     {
         "id": "TFT_Item_Artifact_BlightingJewel",
-        "name": "Joyau putréfiant"
+        "name": "Blighting Jewel",
+        "kind": "artifact",
+        "description": "Dealing magic damage reduces the target's Magic Resist by 4. If their Magic Resist is 0, grant the holder 5 Mana instead.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_CursedVampiricScepter",
-        "name": "Sceptre vampirique corrompu"
+        "name": "Corrupt Vampiric Scepter",
+        "kind": "artifact",
+        "description": "Attacks deal an additional 60% Attack Damage %i:scaleAD% as physical damage and heal the holder for the damage dealt.<br><br><TFTShadowItemBonus>The holder cannot cast their Ability or gain Mana.</TFTShadowItemBonus>",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_Dawncore",
-        "name": "Cœur de l'aube"
+        "name": "Dawncore",
+        "kind": "artifact",
+        "description": "Reduce the holder's max Mana by 10. Subsequent spellcasts reduce max Mana by 10%, to a minimum of 15.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_Fishbones",
-        "name": "Poiscaille"
+        "name": "Fishbones",
+        "kind": "artifact",
+        "description": "Doubles the holder's attack range, and causes each of their attacks to target a random enemy.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_ForbiddenIdol",
-        "name": "Idole interdite"
+        "name": "Forbidden Idol",
+        "kind": "artifact",
+        "description": "Shields have 50% of their value converted to max Health instead.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_HorizonFocus",
-        "name": "Concentration lointaine"
+        "name": "Horizon Focus",
+        "kind": "artifact",
+        "description": "Stunning an enemy causes lightning to strike them, dealing 30% of their max Health as magic damage.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_InnervatingLocket",
-        "name": "Médaillon d'excitation"
+        "name": "Innervating Locket",
+        "kind": "artifact",
+        "description": "The holder gains 1% of their total Mana whenever they're hit by an attack.<br><br>Each cast restores 20% of the holder's max Health over 3 seconds.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_LichBane",
-        "name": "Fléau de liche"
+        "name": "Lich Bane",
+        "kind": "artifact",
+        "description": "",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_LightshieldCrest",
-        "name": "Blason des Lightshield"
+        "name": "Lightshield Crest",
+        "kind": "artifact",
+        "description": "Every 3 seconds, Shields the lowest percent Health ally for 70% of the holder's combined Armor and Magic Resist for 5 seconds.<br><br>On death grants this shield to all allies.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_LudensTempest",
-        "name": "Tempête de Luden"
+        "name": "Luden's Tempest",
+        "kind": "artifact",
+        "description": "100% of overkill damage plus 100 is dealt as magic damage to the three enemies nearest the target.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_Mittens",
-        "name": "Moufles"
+        "name": "Mittens",
+        "kind": "artifact",
+        "description": "Shrinks the holder, granting them increased movement speed and immunity to <TFTKeyword>Chill</TFTKeyword>.<br><br><tftitemrules><tftbold>Chill</tftbold>: reduce Attack Speed</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_NavoriFlickerblades",
-        "name": "Tremblelames"
+        "name": "Flickerblades",
+        "kind": "artifact",
+        "description": "Attacks grant 6% stacking Attack Speed. Every 5 attacks also grant 3 Attack Damage and 4 Ability Power.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_ProwlersClaw",
-        "name": "Griffes du rôdeur"
+        "name": "Prowler's Claw",
+        "kind": "artifact",
+        "description": "After killing a target, shed negative effects and dash to the farthest target within 4 hexes. The next 2 critical attacks deal 60% bonus Critical Strike Damage.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_RapidFirecannon",
-        "name": "Canon ultrarapide"
+        "name": "Rapid Firecannon",
+        "kind": "artifact",
+        "description": "Gain +1 Attack Range, increased by 1 whenever the holder kills an enemy.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_SeekersArmguard",
-        "name": "Protège-bras du savant"
+        "name": "Seeker's Armguard",
+        "kind": "artifact",
+        "description": "Takedowns increase the holder's Armor, Magic Resist, and Ability Power by 15, increased to 20 if they score the kill.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_SilvermereDawn",
-        "name": "Aube de Haut-Lac-d'Argent"
+        "name": "Silvermere Dawn",
+        "kind": "artifact",
+        "description": "Grants immunity to Stuns and the holder's attacks Stun the target for 0.8 seconds.<br><br><TFTShadowItemBonus>The holder's Attack Speed is locked at 0.5.</TFTShadowItemBonus>",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_SpectralCutlass",
-        "name": "Sabre spectral"
+        "name": "Spectral Cutlass",
+        "kind": "artifact",
+        "description": "Combat start: Teleport the holder to the mirrored hex on the enemy's side of the board. After 8 seconds, the holder returns to their original location.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_StatikkShiv",
-        "name": "Poignard de Statikk"
+        "name": "Statikk Shiv",
+        "kind": "artifact",
+        "description": "Every 3rd attack deals 40 + 40% of the holder's bonus Ability Power as additional magic damage to 4 enemies.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_SuspiciousTrenchCoat",
-        "name": "Trench-coat suspect"
+        "name": "Suspicious Trench Coat",
+        "kind": "artifact",
+        "description": "Once per combat at 60% Health, the holder splits into 3 copies of themself each with 33% of their max Health.<br><br><tftitemrules>[Unique - only 1 per champion]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_TalismanOfAscension",
-        "name": "Talisman de l'ascension"
+        "name": "Talisman Of Ascension",
+        "kind": "artifact",
+        "description": "After 22 seconds gain 100% max Health and 120% Damage Amp for the rest of combat.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_TheIndomitable",
-        "name": "L'indomptable"
+        "name": "The Indomitable",
+        "kind": "artifact",
+        "description": "The holder's Move Speed is drastically reduced.<br><br>Gain 10% max Health, stun immunity, and pull the current target into melee range.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_TitanicHydra",
-        "name": "Hydre titanesque"
+        "name": "Titanic Hydra",
+        "kind": "artifact",
+        "description": "Attacks deal 3% of the holder's max Health plus 8% of their Attack Damage as bonus physical damage to the target and adjacent enemies.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_UnendingDespair",
-        "name": "Désespoir infini"
+        "name": "Unending Despair",
+        "kind": "artifact",
+        "description": "Whenever a Shield on the holder breaks, 150% of that Shield's initial value is dealt to the nearest enemy as magic damage.",
+        "build": []
     },
     {
         "id": "TFT_Item_Artifact_WitsEnd",
-        "name": "Au bout du rouleau"
+        "name": "Wit's End",
+        "kind": "artifact",
+        "description": "Heals the holder for 35% of all magic damage dealt.",
+        "build": []
     },
     {
         "id": "TFT_Item_BFSword",
-        "name": "BF Glaive"
+        "name": "B.F. Sword",
+        "kind": "basic",
+        "description": "%i:scaleAD% +10% Attack Damage",
+        "build": []
     },
     {
         "id": "TFT_Item_BansheesVeil",
-        "name": "Voile de la banshee"
+        "name": "Banshee's Veil",
+        "kind": "support",
+        "description": "Combat start: Grant the holder and allies within 1 hexes in the same row immunity to crowd control and 25% Attack Speed for 18 seconds.<br><br><tftitemrules>[Support item] [Unique - only 1 per champion]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_Bloodthirster",
-        "name": "Soif-de-sang"
+        "name": "Bloodthirster",
+        "kind": "advanced",
+        "description": "Once per combat at 40% Health, gain a 25% max Health Shield that lasts up to 5 seconds.",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_NegatronCloak"
+        ]
     },
     {
         "id": "TFT_Item_BlueBuff",
-        "name": "Buff bleu"
+        "name": "Blue Buff",
+        "kind": "advanced",
+        "description": "Gain 10% additional Attack Damage and Ability Power from all sources.",
+        "build": [
+            "TFT_Item_TearOfTheGoddess",
+            "TFT_Item_TearOfTheGoddess"
+        ]
     },
     {
         "id": "TFT_Item_BrambleVest",
-        "name": "Armure roncière"
+        "name": "Bramble Vest",
+        "kind": "advanced",
+        "description": "Gain 7% max health.<br><br>Take 8% reduced damage from attacks. When struck by any attack, deal <magicDamage>100 magic damage</magicDamage> to all adjacent enemies.<br><br><tftitemrules>Cooldown: 2 seconds</tftitemrules>",
+        "build": [
+            "TFT_Item_ChainVest",
+            "TFT_Item_ChainVest"
+        ]
     },
     {
         "id": "TFT_Item_ChainVest",
-        "name": "Cotte de mailles"
+        "name": "Chain Vest",
+        "kind": "basic",
+        "description": "%i:scaleArmor% +20 Armor",
+        "build": []
     },
     {
         "id": "TFT_Item_Chalice",
-        "name": "Calice de puissance"
+        "name": "Chalice of Power",
+        "kind": "support",
+        "description": "Combat start: Grant 25 Ability Power and 10 Mana to the holder and allies within 2 hexes in the same row.<br><br>​​<tftitemrules>[Support item]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_Crownguard",
-        "name": "Couronne de la reine"
+        "name": "Crownguard",
+        "kind": "advanced",
+        "description": "Combat Start: Gain a 25% max Health Shield for 8 seconds.<br><br>When the Shield expires, gain 25 Ability Power.",
+        "build": [
+            "TFT_Item_ChainVest",
+            "TFT_Item_NeedlesslyLargeRod"
+        ]
     },
     {
         "id": "TFT_Item_Deathblade",
-        "name": "Lame funeste"
+        "name": "Deathblade",
+        "kind": "advanced",
+        "description": "",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_BFSword"
+        ]
     },
     {
         "id": "TFT_Item_DragonsClaw",
-        "name": "Griffe de dragon"
+        "name": "Dragon's Claw",
+        "kind": "advanced",
+        "description": "Gain 9% max health.<br><br>Every 2 seconds, heal 2.5% max Health.",
+        "build": [
+            "TFT_Item_NegatronCloak",
+            "TFT_Item_NegatronCloak"
+        ]
     },
     {
         "id": "TFT_Item_EternalFlame",
-        "name": "Flamme éternelle"
+        "name": "The Eternal Flame",
+        "kind": "support",
+        "description": "While the holder is alive, all enemies are 33% <TFTKeyword>Wounded</TFTKeyword> and all allies gain 8% Damage Amp. This effect refreshes every 5 seconds.<br><br><tftitemrules>​​[Support item]<br><tftbold>Wound</tftbold>: Reduces healing received</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_ForceOfNature",
-        "name": "Couronne du Tacticien"
+        "name": "Tactician's Crown",
+        "kind": "spatula",
+        "description": "Your team gains +1 max team size.<br><br>10% chance to drop 1 gold when you win combat.<br><br><tftitemrules>\"...the Heart of a hero...\"</tftitemrules>",
+        "build": [
+            "TFT_Item_Spatula",
+            "TFT_Item_Spatula"
+        ]
     },
     {
         "id": "TFT_Item_FrozenHeart",
-        "name": "Vœu du protecteur"
+        "name": "Protector's Vow",
+        "kind": "advanced",
+        "description": "Combat Start: Gain 20 Mana.<br><br>At 40% Health, gain 15 Mana and a Shield equal to 20% max Health.",
+        "build": [
+            "TFT_Item_ChainVest",
+            "TFT_Item_TearOfTheGoddess"
+        ]
     },
     {
         "id": "TFT_Item_FryingPan",
-        "name": "Poêle à frire"
+        "name": "Frying Pan",
+        "kind": "basic",
+        "description": "<tftitemrules>...why else would it be here?</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_GargoyleStoneplate",
-        "name": "Lithoplastron de gargouille"
+        "name": "Gargoyle Stoneplate",
+        "kind": "advanced",
+        "description": "Gain 10 Armor and 10 Magic Resist for each enemy targeting the holder.",
+        "build": [
+            "TFT_Item_ChainVest",
+            "TFT_Item_NegatronCloak"
+        ]
     },
     {
         "id": "TFT_Item_GiantsBelt",
-        "name": "Ceinture du géant"
+        "name": "Giant's Belt",
+        "kind": "basic",
+        "description": "%i:scaleHealth% +150 Health",
+        "build": []
     },
     {
         "id": "TFT_Item_GuardianAngel",
-        "name": "Manteau de la nuit"
+        "name": "Edge of Night",
+        "kind": "advanced",
+        "description": "At 60% Health, briefly become untargetable and shed negative effects.",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_ChainVest"
+        ]
     },
     {
         "id": "TFT_Item_GuinsoosRageblade",
-        "name": "Lame enragée de Guinsoo"
+        "name": "Guinsoo's Rageblade",
+        "kind": "advanced",
+        "description": "Gain 6% stacking Attack Speed every second.",
+        "build": [
+            "TFT_Item_NeedlesslyLargeRod",
+            "TFT_Item_RecurveBow"
+        ]
     },
     {
         "id": "TFT_Item_HextechGunblade",
-        "name": "Pistolame Hextech"
+        "name": "Hextech Gunblade",
+        "kind": "advanced",
+        "description": "Heal the lowest percent Health ally for 20% of damage dealt.",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_NeedlesslyLargeRod"
+        ]
     },
     {
         "id": "TFT_Item_InfinityEdge",
-        "name": "Lame d'infini"
+        "name": "Infinity Edge",
+        "kind": "advanced",
+        "description": "Abilities can critically strike.<br><br>If the holder's abilities can already critically strike, gain 10% Critical Strike Damage instead.",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_SparringGloves"
+        ]
     },
     {
         "id": "TFT_Item_IonicSpark",
-        "name": "Étincelle ionique"
+        "name": "Ionic Spark",
+        "kind": "advanced",
+        "description": "30% <TFTKeyword>Shred</TFTKeyword> enemies within 2 hexes. When enemies cast an Ability, deal magic damage equal to 160% of the Mana spent.<br><br><tftitemrules><tftbold>Shred</tftbold>: Reduce Magic Resist</tftitemrules>",
+        "build": [
+            "TFT_Item_NeedlesslyLargeRod",
+            "TFT_Item_NegatronCloak"
+        ]
     },
     {
         "id": "TFT_Item_JeweledGauntlet",
-        "name": "Gantelet précieux"
+        "name": "Jeweled Gauntlet",
+        "kind": "advanced",
+        "description": "Abilities can critically strike.<br><br>If the holder's abilities can already critically strike, gain 10% Critical Strike Damage instead.",
+        "build": [
+            "TFT_Item_NeedlesslyLargeRod",
+            "TFT_Item_SparringGloves"
+        ]
     },
     {
         "id": "TFT_Item_LastWhisper",
-        "name": "Dernier souffle"
+        "name": "Last Whisper",
+        "kind": "advanced",
+        "description": "Physical damage 30% <TFTKeyword>Sunders</TFTKeyword> the target for 3 seconds. This effect does not stack.<br><br><tftitemrules><tftbold>Sunder</tftbold>: Reduce Armor</tftitemrules>",
+        "build": [
+            "TFT_Item_RecurveBow",
+            "TFT_Item_SparringGloves"
+        ]
     },
     {
         "id": "TFT_Item_Leviathan",
-        "name": "Dent de Nashor"
+        "name": "Nashor's Tooth",
+        "kind": "advanced",
+        "description": "Attacks grant 2 bonus Mana, increased to 4 if they critically strike.",
+        "build": [
+            "TFT_Item_GiantsBelt",
+            "TFT_Item_RecurveBow"
+        ]
     },
     {
         "id": "TFT_Item_LocketOfTheIronSolari",
-        "name": "Médaillon de l'Iron Solari"
+        "name": "Locket of the Iron Solari",
+        "kind": "support",
+        "description": "Combat start: The holder and allies within 2 hexes in the same row gain a 250 Shield, 20 Armor, and 20 Magic Resist for 20 seconds.<br><br>​​<tftitemrules>[Support item]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_MadredsBloodrazor",
-        "name": "Tueur de géants"
+        "name": "Giant Slayer",
+        "kind": "advanced",
+        "description": "Gain 15% additional Damage Amp against Tanks.",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_RecurveBow"
+        ]
     },
     {
         "id": "TFT_Item_Moonstone",
-        "name": "Régénérateur de pierre de lune"
+        "name": "Moonstone Renewer",
+        "kind": "support",
+        "description": "Every 4 seconds, grant a 55-325 Shield (based on Stage) to the 2 lowest percent health allies for 4 seconds.<br><br>​​<tftitemrules>[Support item]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_Morellonomicon",
-        "name": "Morellonomicon"
+        "name": "Morellonomicon",
+        "kind": "advanced",
+        "description": "Attacks and Abilities deal 1% <TFTKeyword>Burn</TFTKeyword> and 33% <TFTKeyword>Wound</TFTKeyword> to enemies for 10 seconds.<br><br><tftitemrules><tftbold>Burn</tftbold>: Deals a percent of the target's max Health as true damage every second<br><tftbold>Wound</tftbold>: Reduces healing received</tftitemrules>",
+        "build": [
+            "TFT_Item_GiantsBelt",
+            "TFT_Item_NeedlesslyLargeRod"
+        ]
     },
     {
         "id": "TFT_Item_NeedlesslyLargeRod",
-        "name": "Baguette trop grosse"
+        "name": "Needlessly Large Rod",
+        "kind": "basic",
+        "description": "%i:scaleAP% +10 Ability Power",
+        "build": []
     },
     {
         "id": "TFT_Item_NegatronCloak",
-        "name": "Manteau de Négatron"
+        "name": "Negatron Cloak",
+        "kind": "basic",
+        "description": "%i:scaleMR% +20 Magic Resist",
+        "build": []
     },
     {
         "id": "TFT_Item_NightHarvester",
-        "name": "Cœur intrépide"
+        "name": "Steadfast Heart",
+        "kind": "advanced",
+        "description": "Gain 10% Durability. While above 50% Health, instead gain 18% Durability.",
+        "build": [
+            "TFT_Item_ChainVest",
+            "TFT_Item_SparringGloves"
+        ]
     },
     {
         "id": "TFT_Item_PowerGauntlet",
-        "name": "Fléau vengeur"
+        "name": "Striker's Flail",
+        "kind": "advanced",
+        "description": "Critical Strikes grant 5% Damage Amp for 5 seconds, stacking up to 4 times.",
+        "build": [
+            "TFT_Item_GiantsBelt",
+            "TFT_Item_SparringGloves"
+        ]
     },
     {
         "id": "TFT_Item_Quicksilver",
-        "name": "Mercure"
+        "name": "Quicksilver",
+        "kind": "advanced",
+        "description": "Combat Start: Gain immunity to crowd control for 18 seconds.<br><br>Gain 3% stacking Attack Speed every second.",
+        "build": [
+            "TFT_Item_NegatronCloak",
+            "TFT_Item_SparringGloves"
+        ]
     },
     {
         "id": "TFT_Item_RabadonsDeathcap",
-        "name": "Coiffe de Rabadon"
+        "name": "Rabadon's Deathcap",
+        "kind": "advanced",
+        "description": "",
+        "build": [
+            "TFT_Item_NeedlesslyLargeRod",
+            "TFT_Item_NeedlesslyLargeRod"
+        ]
     },
     {
         "id": "TFT_Item_RadiantVirtue",
-        "name": "Vertu du martyr"
+        "name": "Virtue of the Martyr",
+        "kind": "support",
+        "description": "Every 5 seconds, heal your team for 7% of their max Health. When the holder dies, the healing increases to 14% max Health for 2 extra heals.<br><br> <br><br>​​<tftitemrules>[Support item]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_RapidFireCannon",
-        "name": "Buff rouge"
+        "name": "Red Buff",
+        "kind": "advanced",
+        "description": "Attacks and Abilities 1% <TFTKeyword>Burn</TFTKeyword> and 33% <TFTKeyword>Wound</TFTKeyword> enemies for 5 seconds.<br><br><tftitemrules><tftbold>Burn</tftbold>: Deals a percent of the target's max Health as true damage every second<br><tftbold>Wound</tftbold>: Reduces healing received</tftitemrules>",
+        "build": [
+            "TFT_Item_RecurveBow",
+            "TFT_Item_RecurveBow"
+        ]
     },
     {
         "id": "TFT_Item_RecurveBow",
-        "name": "Arc courbe"
+        "name": "Recurve Bow",
+        "kind": "basic",
+        "description": "%i:scaleAS% +10% Attack Speed",
+        "build": []
     },
     {
         "id": "TFT_Item_RedBuff",
-        "name": "Cape solaire"
+        "name": "Sunfire Cape",
+        "kind": "advanced",
+        "description": "Gain 8% max Health. <br><br>Every 2 seconds, deal 1% <TFTKeyword>Burn</TFTKeyword> and 33% <TFTKeyword>Wound</TFTKeyword> to an enemy within 2 hexes for 10 seconds.<br><br><tftitemrules><tftbold>Burn</tftbold>: Deals a percent of the target's max Health as true damage every second<br><tftbold>Wound</tftbold>: Reduces healing received</tftitemrules>",
+        "build": [
+            "TFT_Item_ChainVest",
+            "TFT_Item_GiantsBelt"
+        ]
     },
     {
         "id": "TFT_Item_Redemption",
-        "name": "Visage spirituel"
+        "name": "Spirit Visage",
+        "kind": "advanced",
+        "description": "Regenerate 3% of missing Health each second.",
+        "build": [
+            "TFT_Item_GiantsBelt",
+            "TFT_Item_TearOfTheGoddess"
+        ]
     },
     {
         "id": "TFT_Item_RunaansHurricane",
-        "name": "Fureur du kraken"
+        "name": "Kraken's Fury",
+        "kind": "advanced",
+        "description": "Attacks grant 3% stacking Attack Damage, up to 20 attacks. After 20 attacks, gain 40% Attack Speed.",
+        "build": [
+            "TFT_Item_NegatronCloak",
+            "TFT_Item_RecurveBow"
+        ]
     },
     {
         "id": "TFT_Item_SentinelSwarm",
-        "name": "Essaim de golems"
+        "name": "Sentinel Swarm",
+        "kind": "misc",
+        "description": "Every 3 seconds, summon a powerful Sentinel equipped with Completed, Artifact, and Radiant items.",
+        "build": []
     },
     {
         "id": "TFT_Item_Shroud",
-        "name": "Linceul d'apaisement"
+        "name": "Shroud of Stillness",
+        "kind": "support",
+        "description": "Combat start: Shoot a beam that 30% <TFTKeyword>Mana Reaves</TFTKeyword> enemies.<br><br>Your team gains 60 Health.",
+        "build": []
     },
     {
         "id": "TFT_Item_SparringGloves",
-        "name": "Gants d'entraînement"
+        "name": "Sparring Gloves",
+        "kind": "basic",
+        "description": "+20 Critical Strike Chance",
+        "build": []
     },
     {
         "id": "TFT_Item_Spatula",
-        "name": "Spatule"
+        "name": "Spatula",
+        "kind": "basic",
+        "description": "<tftitemrules>It must do something...</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_SpearOfShojin",
-        "name": "Lance de Shojin"
+        "name": "Spear of Shojin",
+        "kind": "advanced",
+        "description": "Attacks grant 5 bonus Mana.",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_TearOfTheGoddess"
+        ]
     },
     {
         "id": "TFT_Item_SpectralGauntlet",
-        "name": "Linceul de la congruence"
+        "name": "Evenshroud",
+        "kind": "advanced",
+        "description": "30% <TFTKeyword>Sunder</TFTKeyword> enemies within 2 hexes. Gain 25 Armor and Magic Resist for the first 15 seconds of combat.<br><br><tftitemrules><tftbold>Sunder</tftbold>: Reduce Armor</tftitemrules>",
+        "build": [
+            "TFT_Item_GiantsBelt",
+            "TFT_Item_NegatronCloak"
+        ]
     },
     {
         "id": "TFT_Item_StatikkShiv",
-        "name": "Bâton du vide"
+        "name": "Void Staff",
+        "kind": "advanced",
+        "description": "Attacks and Ability damage 30% <TFTKeyword>Shred</TFTKeyword> the target for 5 seconds. This effect does not stack.<br><br><tftitemrules><tftbold>Shred</tftbold>: Reduce Magic Resist</tftitemrules>",
+        "build": [
+            "TFT_Item_RecurveBow",
+            "TFT_Item_TearOfTheGoddess"
+        ]
     },
     {
         "id": "TFT_Item_SteraksGage",
-        "name": "Gage de Sterak"
+        "name": "Sterak's Gage",
+        "kind": "advanced",
+        "description": "At 60% Health, gain a Shield equal to 50% of the wearer's maximum Health that rapidly decays over 5 seconds.",
+        "build": [
+            "TFT_Item_BFSword",
+            "TFT_Item_GiantsBelt"
+        ]
     },
     {
         "id": "TFT_Item_SupportKnightsVow",
-        "name": "Vœu du chevalier"
+        "name": "Knight's Vow",
+        "kind": "support",
+        "description": "Combat start: Grant 200 Health and 15% Omnivamp to the holder and allies within 1 hex in the same row.<br><br>​​<tftitemrules>[Support item]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_TacticiansRing",
-        "name": "Cape du Tacticien"
+        "name": "Tactician's Cape",
+        "kind": "spatula",
+        "description": "Your team gains +1 max team size.<br><br>10% chance to drop 1 gold after 10 seconds of combat.<br><br><tftitemrules>\"...and a bit of Luck.\"</tftitemrules>",
+        "build": [
+            "TFT_Item_FryingPan",
+            "TFT_Item_Spatula"
+        ]
     },
     {
         "id": "TFT_Item_TacticiansScepter",
-        "name": "Bouclier du Tacticien"
+        "name": "Tactician's Shield",
+        "kind": "spatula",
+        "description": "Your team gains +1 max team size.<br><br>10% chance to drop 1 gold when the holder dies.<br><br><tftitemrules>\"Imbued with a Philosopher's wisdom...\"</tftitemrules>",
+        "build": [
+            "TFT_Item_FryingPan",
+            "TFT_Item_FryingPan"
+        ]
     },
     {
         "id": "TFT_Item_TearOfTheGoddess",
-        "name": "Larme de la déesse"
+        "name": "Tear of the Goddess",
+        "kind": "basic",
+        "description": "%i:TFTManaRegen% +1 Mana Regen",
+        "build": []
     },
     {
         "id": "TFT_Item_ThiefsGloves",
-        "name": "Gants de voleur"
+        "name": "Thief's Gloves",
+        "kind": "advanced",
+        "description": "Each round: Equip 2 random items.",
+        "build": [
+            "TFT_Item_SparringGloves",
+            "TFT_Item_SparringGloves"
+        ]
     },
     {
         "id": "TFT_Item_TitanicHydra",
-        "name": "Portail de Zz'Rot"
+        "name": "Zz'Rot Portal",
+        "kind": "misc",
+        "description": "Combat start: <TFTKeyword>Taunt</TFTKeyword>.<br>On death, a Voidspawn arises, <TFTKeyword>Taunting</TFTKeyword> nearby enemies. The Voidspawn has massively reduced effectiveness when created by a summoned unit.<br><br><tftitemrules><tftbold>Taunt</tftbold>: enemies that are able and in range must attack the taunter</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_TitansResolve",
-        "name": "Détermination du titan"
+        "name": "Titan's Resolve",
+        "kind": "advanced",
+        "description": "Gain 2% Attack Damage and 2 Ability Power when attacking or taking damage, stacking up to 25 times. <br><br>At full stacks, gain ?% Damage Amp and gain immunity to crowd control.",
+        "build": [
+            "TFT_Item_ChainVest",
+            "TFT_Item_RecurveBow"
+        ]
     },
     {
         "id": "TFT_Item_UnstableConcoction",
-        "name": "Main de la justice"
+        "name": "Hand Of Justice",
+        "kind": "advanced",
+        "description": "Gain 2 effects:<li>15% Attack Damage and 15 Ability Power.<li>12% Omnivamp.<br><br>While above 50% health, double the Attack Damage and Ability Power. While below 50% Health, double the Omnivamp.",
+        "build": [
+            "TFT_Item_SparringGloves",
+            "TFT_Item_TearOfTheGoddess"
+        ]
     },
     {
         "id": "TFT_Item_UnstableTreasureChest",
-        "name": "Coffre au trésor instable"
+        "name": "Unstable Treasure Chest",
+        "kind": "support",
+        "description": "When the holder dies, the 4 highest percent health allies gain a temporary completed item.<br><br>​​<tftitemrules>[Support item]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_WarmogsArmor",
-        "name": "Armure de Warmog"
+        "name": "Warmog's Armor",
+        "kind": "advanced",
+        "description": "Gain 12% max health.",
+        "build": [
+            "TFT_Item_GiantsBelt",
+            "TFT_Item_GiantsBelt"
+        ]
     },
     {
         "id": "TFT_Item_ZekesHerald",
-        "name": "Blason de Zeke"
+        "name": "Zeke's Herald",
+        "kind": "support",
+        "description": "Combat start: Grant %i:scaleAS% 30% Attack Speed to the holder and allies within 2 hexes in the same row.<br><br>​​<tftitemrules>[Support item]</tftitemrules>",
+        "build": []
     },
     {
         "id": "TFT_Item_Zephyr",
-        "name": "Zéphyr"
+        "name": "Zephyr",
+        "kind": "support",
+        "description": "Combat start: Summon a whirlwind on the opposite side of the arena that removes the closest enemy from combat for 5 seconds. <br><br>Your team gains 2% Attack Speed.",
+        "build": []
     }
 ]
 
+
+export const itemKinds = ['advanced', 'emblem', 'artifact', 'basic', 'support', 'misc', 'spatula', 'consumable' ]

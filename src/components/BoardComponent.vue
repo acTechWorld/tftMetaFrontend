@@ -134,6 +134,7 @@
                 :id="champion.id"
                 :src="champion.url"
                 @drag-start="(el) => (currentInventoryDrag = el)"
+                @click="handleClickChampItem(champion)"
               />
                <p
                 v-if="!displayedChampions.length"
@@ -1009,6 +1010,25 @@ function resetDrag() {
   currentInventoryDrag.value = null
   dragSource.value = null
 }
+
+function handleClickChampItem(champion: Inventory) {
+  for (let r = 0; r < board.value.length; r++) {
+    for (let c = 0; c < board.value[r].length; c++) {
+      const tile = board.value[r][c]
+      if (!tile.main) {
+        tile.main = {
+          id: champion.id,
+          type: 'champion',
+          src: champion.url,
+        }
+        tile.subs = [null, null, null]  // reset subs
+        tile.starLevel = 1              // optional: set default star level
+        return  // exit immediately after placing
+      }
+    }
+  }
+}
+
 </script>
 <style lang="css" scoped>
 /* When elements are removed */

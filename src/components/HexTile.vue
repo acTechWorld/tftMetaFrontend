@@ -25,7 +25,7 @@
 
       <!-- Star overlay (hover) -->
       <div
-        v-if="main"
+        v-if="main && starLevel"
         class="absolute top-4 left-1 right-1 flex justify-center gap-1 duration-200 z-10"
       >
         <button

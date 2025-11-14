@@ -72,11 +72,18 @@
           @drop.prevent="handleInventoryDrop"
         >
           <!-- Champions -->
-          <div
-            class="border border-gray-200 rounded-xl bg-white p-3 flex-1 overflow-y-auto"
-          >
+          <div class="border h-80 border-gray-200 rounded-xl bg-white p-3 flex-1 flex flex-col">
             <h3 class="text-sm font-semibold text-gray-700 mb-2 text-center">Champions</h3>
-            <div class="flex flex-wrap gap-2 justify-center">
+
+            <!-- 🔍 Search Bar -->
+            <input
+              v-model="champSearch"
+              type="text"
+              placeholder="Search by name or trait..."
+              class="w-full mb-3 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-400"
+            />
+
+            <div class="flex flex-wrap gap-2 justify-center overflow-y-auto">
               <InventoryItem
                 class="w-10 h-10 hover:scale-110 transition-transform"
                 v-for="champion in displayedChampions"
@@ -91,10 +98,19 @@
 
           <!-- Items -->
           <div
-            class="border border-gray-200 rounded-xl bg-white flex-1 flex flex-col overflow-hidden"
+            class="border h-80 border-gray-200 rounded-xl bg-white flex-1 flex flex-col p-3"
           >
+            <h3 class="text-sm font-semibold text-gray-700 mb-2 text-center">Items</h3>
+
+            <!-- 🔍 Search Bar -->
+            <input
+              v-model="itemSearch"
+              type="text"
+              placeholder="Search by name"
+              class="w-full mb-3 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-400"
+            />
             <!-- Tabs -->
-            <div class="flex border-b border-gray-300">
+            <div class="flex border-b border-gray-300 overflow-y-auto">
               <button
                 v-for="kind in itemKinds"
                 :key="kind"
@@ -217,28 +233,56 @@ const board = ref<BoardTile[][]>(
     Array.from({ length: cols }, () => ({
       main: null,
       subs: [null, null, null],
-      starLevel: null
+      starLevel: null,
     })),
   ),
 )
 
 const currentInventoryDrag = ref<DragItem | null>(null)
 const activeItemKind = ref(itemKinds[0])
-
+const champSearch = ref<string>('')
+const itemSearch = ref<string>('')
 const dragSource = ref<{ r: number; c: number } | null>(null) // source tile if drag from a HexTile
+
 //COMPUTED
-const displayedChampions = computed<Inventory[]>(() =>
-  champions.map((c) => ({
-    id: c.id,
-    name: c.name,
-    url: c.url,
-  })),
-)
+const displayedChampions = computed<Inventory[]>(() => {
+  const search = champSearch.value.trim().toLowerCase()
+
+  return champions
+    .filter((c) => {
+      if (!search) return true
+
+      // match by name
+      const nameMatch = c.name.toLowerCase().includes(search)
+
+      // match by trait
+      const traitIds = mappingChampionsTraits[c.id as keyof typeof mappingChampionsTraits] || []
+      const traitNames = traitIds
+        .map((tid) => championTraits.find((t) => t.id === tid)?.name?.toLowerCase())
+        .filter(Boolean)
+
+      const traitMatch = traitNames.some((tName) => tName!.includes(search))
+
+      return nameMatch || traitMatch
+    })
+    .map((c) => ({
+      id: c.id,
+      name: c.name,
+      url: c.url,
+    }))
+})
 
 const displayedItems = computed(() => {
   const currentKind = activeItemKind.value
   return items
-    .filter((item) => item.kind === currentKind)
+    .filter((item) => {
+      const kindMatch = item.kind === currentKind
+      // match by name
+      const search = itemSearch.value.trim().toLowerCase()
+
+      const nameMatch = item.name.toLowerCase().includes(search)
+      return kindMatch && nameMatch
+    })
     .map((i) => ({
       id: i.id,
       name: i.name,
@@ -295,7 +339,7 @@ const equippedItemsList = computed(() => {
         count,
         unique: fullItem?.unique || false,
         build, // 🧩 list of basic items
-        kind: fullItem?.kind
+        kind: fullItem?.kind,
       }
     })
     .sort((a, b) => b.count - a.count)
@@ -380,10 +424,10 @@ const totalBasicItems = computed(() => {
 
   // Loop through equipped full items
   for (const item of equippedItemsList.value) {
-    if(item.kind === 'basic'){
-        basicCountMap[item.id] = (basicCountMap[item.id] || 0) + item.count
+    if (item.kind === 'basic') {
+      basicCountMap[item.id] = (basicCountMap[item.id] || 0) + item.count
     } else {
-       for (const comp of item.build) {
+      for (const comp of item.build) {
         basicCountMap[comp.id] = (basicCountMap[comp.id] || 0) + item.count
       }
     }
@@ -473,9 +517,7 @@ function handleSubDrop(r: number, c: number, item: DragItem) {
   // --- Check uniqueness ---
   if (fullItem.unique) {
     const alreadyEquipped = board.value.some((row) =>
-      row.some((tile) =>
-        tile.main?.id === championId && tile.subs.some((s) => s?.id === item.id),
-      ),
+      row.some((tile) => tile.main?.id === championId && tile.subs.some((s) => s?.id === item.id)),
     )
     if (alreadyEquipped) {
       return // Cannot equip this unique item again on the same champion
@@ -496,7 +538,7 @@ function handleSubDrop(r: number, c: number, item: DragItem) {
   // --- Check for basic items limit ---
   if (fullItem.kind === 'basic') {
     const alreadyBasicEquipped = targetTile.subs.some(
-      (s) => s && items.find(i => i.id === s.id)?.kind === 'basic'
+      (s) => s && items.find((i) => i.id === s.id)?.kind === 'basic',
     )
     if (alreadyBasicEquipped) {
       return // Cannot equip more than one basic item
@@ -517,7 +559,6 @@ function handleSubDrop(r: number, c: number, item: DragItem) {
 
   resetDrag()
 }
-
 
 function handleInventoryDrop(e: DragEvent) {
   e.preventDefault()

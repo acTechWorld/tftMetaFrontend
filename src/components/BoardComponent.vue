@@ -223,7 +223,7 @@ const displayedChampions = computed<Inventory[]>(() =>
   champions.map((c) => ({
     id: c.id,
     name: c.name,
-    url: `/img/tft-champion/${c.id}.TFT_Set15.png`,
+    url: c.url
   })),
 )
 

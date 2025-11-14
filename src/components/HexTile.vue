@@ -1,13 +1,13 @@
 <template>
   <div
-    class="flex flex-col items-center gap-1"
+    class="flex flex-col items-center md:gap-1"
     @dragover="onDragOver"
     @dragleave="onDragLeave"
     @drop="onDrop"
   >
     <!-- Main hexagon -->
     <div
-      class="w-8 [@media(min-width:500px)]:w-[2.5rem] sm:!w-16 md:!w-20 lg:!w-24 xl:!w-26 2xl:!w-32 aspect-square group relative"
+      class="w-10 [@media(min-width:500px)]:w-[3rem] sm:!w-16 md:!w-20 lg:!w-24 xl:!w-26 2xl:!w-32 aspect-square group relative"
       :class="[isHovering && (currentInventoryDrag?.type === 'champion' || isHoveringItemValid)
         ? 'bg-orange-400/60 dark:bg-purple-400/60 shadow-[0_0_25px_rgba(249,115,22,0.9)]'
         : 'bg-orange-400 dark:bg-purple-400', ctrlPressed && main ? 'cursor-not-allowed': 'cursor-pointer']"
@@ -26,14 +26,14 @@
       <!-- Star overlay (hover) -->
       <div
         v-if="main && starLevel"
-        class="absolute top-4 left-1 right-1 flex justify-center gap-1 duration-200 z-10"
+        class="absolute top-1 sm:top-2 md:top-3 lg:top-4 left-1 right-1 flex justify-center gap-1 duration-200 z-10"
       >
         <button
           v-for="n in 3"
           :key="n"
           @click.stop="setStars(n)"
           :class="starLevel >= n ? 'block' : 'hidden group-hover:block'"
-          class="cursor-pointer w-4 h-4 md:w-5 md:h-5 text-yellow-400 hover:scale-125 transition-transform"
+          class="cursor-pointer w-3 h-3 md:w-5 md:h-5 text-yellow-400 hover:scale-125 transition-transform"
         >
           <svg
             v-if="starLevel >= n"
@@ -58,11 +58,11 @@
     </div>
 
     <!-- Sub slots -->
-    <div class="flex gap-1 transition-opacity duration-200" :class="{'pointer-events-none': isHovering}">
+    <div class="flex md:gap-1 transition-opacity duration-200" :class="{'pointer-events-none': isHovering}">
       <template v-for="(sub, i) in subs" :key="i" >
         <div
           v-show="isHoveringItemValid || sub"
-          class="w-6 h-6 border-2 border-gray-400 rounded relative -mt-15"
+          class="w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 border-2 border-gray-400 rounded relative -mt-4  md:-mt-8 lg:-mt-10 xl:-mt-12 2xl:-mt-15"
           @click="onSubClick(i, $event)"
         >
           <img

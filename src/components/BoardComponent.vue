@@ -135,7 +135,14 @@
                 :src="champion.url"
                 @drag-start="(el) => (currentInventoryDrag = el)"
               />
+               <p
+                v-if="!displayedChampions.length"
+                class="text-xs absolute text-gray-400 dark:text-gray-400 text-center w-full py-6"
+              >
+                No champions found
+              </p>
             </transition-group>
+           
           </div>
 
           <!-- Items -->
@@ -175,7 +182,7 @@
             <transition-group
               name="inv"
               tag="div"
-              class="flex flex-wrap gap-2 p-2 justify-center overflow-y-auto"
+              class="flex flex-wrap gap-2 p-2 justify-center overflow-y-auto h-fit"
             >
               <InventoryItem
                 v-for="item in displayedItems"
@@ -188,7 +195,7 @@
               />
               <p
                 v-if="!displayedItems.length"
-                class="text-xs text-gray-400 dark:text-gray-400 text-center w-full py-6"
+                class="text-xs absolute text-gray-400 dark:text-gray-400 text-center w-full py-6"
               >
                 No {{ activeItemKind }} items
               </p>
@@ -252,7 +259,14 @@
                 :src="champion.url"
                 @drag-start="(el) => (currentInventoryDrag = el)"
               />
+              <p
+                v-if="!displayedChampions.length"
+                class="text-xs absolute text-gray-400 dark:text-gray-400 text-center w-full py-6"
+              >
+                No champions found
+              </p>
             </transition-group>
+            
           </div>
 
           <!-- Items panel -->
@@ -304,7 +318,7 @@
               />
               <p
                 v-if="!displayedItems.length"
-                class="text-xs text-gray-400 dark:text-gray-400 text-center w-full py-6"
+                class="text-xs absolute text-gray-400 dark:text-gray-400 text-center w-full py-6"
               >
                 No {{ activeItemKind }} items
               </p>
@@ -999,11 +1013,16 @@ function resetDrag() {
 <style lang="css" scoped>
 /* When elements are removed */
 .inv-leave-active {
-  transition: all 0.1s ease-out;
+  transition: none !important;
 }
 
 .inv-leave-to {
   opacity: 0;
+  transform: scale(0.6) rotate(-6deg);
+}
+
+.inv-enter-to {
+  opacity: 1;
   transform: scale(0.6) rotate(-6deg);
 }
 

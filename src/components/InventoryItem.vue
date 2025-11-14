@@ -2,7 +2,6 @@
   <img
     :src="src"
     draggable="true"
-    @click="onClickItem"
     @dragstart="onDesktopDragStart"
     @touchstart.prevent="onTouchStart"
     @touchmove.prevent="onTouchMove"

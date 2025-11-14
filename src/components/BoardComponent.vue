@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-gray-50 min-h-screen py-20">
-    <div class="max-w-[1800px] mx-auto flex flex-col lg:flex-row gap-6">
+  <div class="bg-gray-50 min-h-screen py-20 px-5">
+    <div class="max-w-[1800px] mx-auto flex flex-col xl:flex-row gap-6">
       <!-- Traits Panel -->
       <div
-        class="w-full max-h-[calc(100vh_-_160px)] lg:w-56 border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col gap-4 bg-white"
+        class="xl:flex hidden max-h-[calc(100vh_-_160px)] w-56 border border-gray-200 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white"
       >
         <h2 class="text-lg font-semibold text-center text-gray-700">Traits</h2>
         <div v-if="activeTraits.length" class="flex flex-col gap-3 overflow-y-auto">
@@ -45,7 +45,7 @@
       <!-- Board + Inventory -->
       <div class="flex-1 flex flex-col gap-6">
         <!-- Hex Board -->
-        <div class="self-center -translate-x-10">
+        <div class="self-center -translate-x-6 xl:-translate-x-6.5 2xl:-translate-x-8">
           <div v-for="(row, r) in rows" :key="r" class="flex gap-2 justify-center">
             <HexTile
               v-for="(col, c) in cols"
@@ -83,7 +83,11 @@
               class="w-full mb-3 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-400"
             />
 
-            <div class="flex flex-wrap gap-2 justify-center overflow-y-auto">
+            <transition-group
+              name="inv"
+              tag="div"
+              class="flex flex-wrap gap-2 justify-center overflow-y-auto"
+            >
               <InventoryItem
                 class="w-10 h-10 hover:scale-110 transition-transform"
                 v-for="champion in displayedChampions"
@@ -93,13 +97,11 @@
                 :src="champion.url"
                 @drag-start="(el) => (currentInventoryDrag = el)"
               />
-            </div>
+            </transition-group>
           </div>
 
           <!-- Items -->
-          <div
-            class="border h-80 border-gray-200 rounded-xl bg-white flex-1 flex flex-col p-3"
-          >
+          <div class="border h-80 border-gray-200 rounded-xl bg-white flex-1 flex flex-col p-3">
             <h3 class="text-sm font-semibold text-gray-700 mb-2 text-center">Items</h3>
 
             <!-- 🔍 Search Bar -->
@@ -127,12 +129,16 @@
             </div>
 
             <!-- Items Grid -->
-            <div class="flex flex-wrap gap-2 p-2 justify-center overflow-y-auto">
+            <transition-group
+              name="inv"
+              tag="div"
+              class="flex flex-wrap gap-2 p-2 justify-center overflow-y-auto"
+            >
               <InventoryItem
                 v-for="item in displayedItems"
                 :key="item.id"
                 type="item"
-                class="w-8 h-8 hover:scale-110 transition-transform"
+                class="w-8 h-8 hover:scale-110 transition-transform search-appear"
                 :id="item.id"
                 :src="item.url"
                 @drag-start="(el) => (currentInventoryDrag = el)"
@@ -143,62 +149,105 @@
               >
                 No {{ activeItemKind }} items
               </p>
-            </div>
+            </transition-group>
           </div>
         </div>
       </div>
+      <div class="flex flex-col md:flex-row gap-5">
+        <!-- Traits Panel Mobile -->
+        <div
+          class="flex xl:hidden max-h-[calc(100vh_-_160px)] w-full border border-gray-200 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white"
+        >
+          <h2 class="text-lg font-semibold text-center text-gray-700">Traits</h2>
+          <div v-if="activeTraits.length" class="flex flex-col gap-3 overflow-y-auto">
+            <div v-for="trait in activeTraits" :key="trait.id" class="flex items-center gap-2">
+              <img
+                :src="`/img/tft-trait/${trait.url}`"
+                class="w-6 h-6 rounded-full"
+                :class="trait.currentThresholdIndex === -1 ? 'bg-gray-300' : 'bg-orange-400'"
+                alt=""
+              />
+              <div class="flex flex-col flex-1">
+                <span class="font-medium text-sm">{{ trait.name }}</span>
+                <div class="text-xs flex gap-1 flex-wrap">
+                  <span v-if="trait.currentThresholdIndex === -1" class="text-gray-400">
+                    {{ trait.count }}/{{ trait.thresholds[0] }}
+                  </span>
+                  <template v-else>
+                    <div v-for="(n, index) in trait.thresholds" :key="index">
+                      <span
+                        :class="
+                          index === trait.currentThresholdIndex
+                            ? 'font-bold text-green-600'
+                            : 'text-gray-500'
+                        "
+                      >
+                        {{ n }}
+                      </span>
+                      <span v-if="index !== trait.thresholds.length - 1"> > </span>
+                    </div>
+                  </template>
+                </div>
+              </div>
+              <span class="font-semibold">{{ trait.count }}</span>
+            </div>
+          </div>
+          <p v-else class="text-sm text-gray-400 text-center">No active traits</p>
+        </div>
+        <!-- Equipped Items Panel -->
+        <div
+          class="w-full max-h-[calc(100vh_-_160px)] 2xl:w-56 border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col gap-4 bg-white overflow-y-auto"
+        >
+          <h2 class="text-lg font-semibold text-center text-gray-700">Equipped Items</h2>
 
-      <!-- Equipped Items Panel -->
-      <div
-        class="w-full max-h-[calc(100vh_-_160px)] lg:w-56 border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col gap-4 bg-white overflow-y-auto"
-      >
-        <h2 class="text-lg font-semibold text-center text-gray-700">Equipped Items</h2>
+          <div v-if="equippedItemsList.length" class="flex flex-col gap-2">
+            <div
+              v-for="item in equippedItemsList"
+              :key="item.id"
+              class="flex flex-col border border-gray-200 rounded-lg p-2 hover:bg-gray-50 transition"
+            >
+              <div class="flex items-center gap-2">
+                <img :src="`/img/tft-item/${item.id}.png`" class="w-6 h-6 rounded" />
+                <div class="flex flex-col">
+                  <span class="text-sm font-medium">{{ item.name }}</span>
+                  <div class="flex items-center gap-2 text-xs text-gray-500">
+                    <span>×{{ item.count }}</span>
+                    <span v-if="item.unique" class="text-red-500 font-semibold">Unique</span>
+                  </div>
+                </div>
+              </div>
+              <div v-if="item.build?.length" class="flex items-center gap-1 mt-1 ml-8">
+                <template v-for="(comp, index) in item.build" :key="comp.id">
+                  <img :src="`/img/tft-item/${comp.id}.png`" class="w-5 h-5 rounded" />
+                  <span v-if="index < item.build.length - 1" class="text-gray-400 text-xs">×</span>
+                </template>
+              </div>
+            </div>
+          </div>
+          <p v-else class="text-sm text-gray-400 text-center">No items equipped</p>
 
-        <div v-if="equippedItemsList.length" class="flex flex-col gap-2">
-          <div
-            v-for="item in equippedItemsList"
-            :key="item.id"
-            class="flex flex-col border border-gray-200 rounded-lg p-2 hover:bg-gray-50 transition"
-          >
-            <div class="flex items-center gap-2">
-              <img :src="`/img/tft-item/${item.id}.png`" class="w-6 h-6 rounded" />
-              <div class="flex flex-col">
-                <span class="text-sm font-medium">{{ item.name }}</span>
-                <div class="flex items-center gap-2 text-xs text-gray-500">
-                  <span>×{{ item.count }}</span>
-                  <span v-if="item.unique" class="text-red-500 font-semibold">Unique</span>
+          <div class="border-t border-gray-200 my-2"></div>
+
+          <!-- Total Basic Items -->
+          <div>
+            <h3 class="text-base font-semibold text-center mb-2 text-gray-700">
+              Basic Items Needed
+            </h3>
+            <div v-if="totalBasicItems.length" class="flex flex-col gap-2">
+              <div
+                v-for="item in totalBasicItems"
+                :key="item.id"
+                class="flex items-center gap-2 border border-gray-200 rounded-lg p-2 hover:bg-gray-50 transition"
+              >
+                <img :src="`/img/tft-item/${item.id}.png`" class="w-5 h-5 rounded" />
+                <div class="flex flex-col">
+                  <span class="text-sm font-medium">{{ item.name }}</span>
+                  <span class="text-xs text-gray-500">×{{ item.count }}</span>
                 </div>
               </div>
             </div>
-            <div v-if="item.build?.length" class="flex items-center gap-1 mt-1 ml-8">
-              <template v-for="(comp, index) in item.build" :key="comp.id">
-                <img :src="`/img/tft-item/${comp.id}.png`" class="w-5 h-5 rounded" />
-                <span v-if="index < item.build.length - 1" class="text-gray-400 text-xs">×</span>
-              </template>
-            </div>
+            <p v-else class="text-sm text-gray-400 text-center">No basic items required</p>
           </div>
-        </div>
-        <p v-else class="text-sm text-gray-400 text-center">No items equipped</p>
-
-        <div class="border-t border-gray-200 my-2"></div>
-
-        <!-- Total Basic Items -->
-        <div>
-          <h3 class="text-base font-semibold text-center mb-2 text-gray-700">Basic Items Needed</h3>
-          <div v-if="totalBasicItems.length" class="flex flex-col gap-2">
-            <div
-              v-for="item in totalBasicItems"
-              :key="item.id"
-              class="flex items-center gap-2 border border-gray-200 rounded-lg p-2 hover:bg-gray-50 transition"
-            >
-              <img :src="`/img/tft-item/${item.id}.png`" class="w-5 h-5 rounded" />
-              <div class="flex flex-col">
-                <span class="text-sm font-medium">{{ item.name }}</span>
-                <span class="text-xs text-gray-500">×{{ item.count }}</span>
-              </div>
-            </div>
-          </div>
-          <p v-else class="text-sm text-gray-400 text-center">No basic items required</p>
         </div>
       </div>
     </div>
@@ -585,3 +634,19 @@ function resetDrag() {
   dragSource.value = null
 }
 </script>
+<style lang="css" scoped>
+/* When elements are removed */
+.inv-leave-active {
+  transition: all 0.1s ease-out;
+}
+
+.inv-leave-to {
+  opacity: 0;
+  transform: scale(0.6) rotate(-6deg);
+}
+
+/* OPTIONAL: No appear animation */
+.inv-enter-active {
+  transition: none !important;
+}
+</style>

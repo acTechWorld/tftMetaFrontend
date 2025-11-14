@@ -7,7 +7,7 @@
   >
     <!-- Main hexagon -->
     <div
-      class="w-30 xl:w-36 2xl:w-40 aspect-square group relative"
+      class="w-24 xl:w-26 2xl:w-32 aspect-square group relative"
       :class="[isHovering && (currentInventoryDrag?.type === 'champion' || isHoveringItemValid)
         ? 'bg-orange-400/60 shadow-[0_0_25px_rgba(249,115,22,0.9)]'
         : 'bg-orange-400', ctrlPressed && main ? 'cursor-not-allowed': 'cursor-pointer']"

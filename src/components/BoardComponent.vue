@@ -1,23 +1,50 @@
 <template>
-  <div class="bg-gray-50 min-h-screen py-20 px-5">
+  <!-- Top toggle button -->
+  <div class="bg-gray-50 dark:bg-gray-900 min-h-screen py-20 px-5">
+    <nav
+      class="flex items-center justify-between px-5 py-4 absolute top-0 w-full max-w-[1800px] justify-self-center"
+    >
+      <img :src="isDark ? '/logo-dark.png' : '/logo-light.png'" width="100" />
+      <button
+        @click="toggleDarkMode"
+        :class="[
+          'flex items-center h-fit cursor-pointer gap-2 px-3 py-1 rounded-full transition',
+          isDark
+            ? 'bg-gray-700 text-gray-200 hover:bg-gray-600'
+            : 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+        ]"
+      >
+        <component :is="isDark ? Sun : Moon" class="w-5 h-5" />
+        <span class="sr-only">{{ isDark ? 'Light Mode' : 'Dark Mode' }}</span>
+      </button>
+    </nav>
     <div class="max-w-[1800px] mx-auto flex flex-col xl:flex-row gap-6">
       <!-- Traits Panel -->
       <div
-        class="xl:flex hidden max-h-[calc(100vh_-_160px)] w-56 border border-gray-200 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white"
+        class="xl:flex hidden max-h-[calc(100vh_-_160px)] w-56 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white dark:bg-gray-800"
       >
-        <h2 class="text-lg font-semibold text-center text-gray-700">Traits</h2>
+        <h2 class="text-lg font-semibold text-center text-gray-700 dark:text-gray-200">Traits</h2>
         <div v-if="activeTraits.length" class="flex flex-col gap-3 overflow-y-auto">
           <div v-for="trait in activeTraits" :key="trait.id" class="flex items-center gap-2">
             <img
               :src="`/img/tft-trait/${trait.url}`"
               class="w-6 h-6 rounded-full"
-              :class="trait.currentThresholdIndex === -1 ? 'bg-gray-300' : 'bg-orange-400'"
+              :class="
+                trait.currentThresholdIndex === -1
+                  ? 'bg-gray-300 dark:bg-gray-600'
+                  : 'bg-orange-400 dark:bg-purple-400'
+              "
               alt=""
             />
             <div class="flex flex-col flex-1">
-              <span class="font-medium text-sm">{{ trait.name }}</span>
+              <span class="font-medium text-sm text-gray-700 dark:text-gray-200">{{
+                trait.name
+              }}</span>
               <div class="text-xs flex gap-1 flex-wrap">
-                <span v-if="trait.currentThresholdIndex === -1" class="text-gray-400">
+                <span
+                  v-if="trait.currentThresholdIndex === -1"
+                  class="text-gray-400 dark:text-gray-400"
+                >
                   {{ trait.count }}/{{ trait.thresholds[0] }}
                 </span>
                 <template v-else>
@@ -25,21 +52,26 @@
                     <span
                       :class="
                         index === trait.currentThresholdIndex
-                          ? 'font-bold text-green-600'
-                          : 'text-gray-500'
+                          ? 'font-extrabold text-green-600'
+                          : 'text-gray-500 dark:text-gray-400'
                       "
                     >
                       {{ n }}
                     </span>
-                    <span v-if="index !== trait.thresholds.length - 1"> > </span>
+                    <span
+                      class="text-gray-500 dark:text-gray-400"
+                      v-if="index !== trait.thresholds.length - 1"
+                    >
+                      >
+                    </span>
                   </div>
                 </template>
               </div>
             </div>
-            <span class="font-semibold">{{ trait.count }}</span>
+            <span class="font-semibold text-gray-700 dark:text-gray-200">{{ trait.count }}</span>
           </div>
         </div>
-        <p v-else class="text-sm text-gray-400 text-center">No active traits</p>
+        <p v-else class="text-sm text-gray-400 text-center dark:text-gray-400">No active traits</p>
       </div>
 
       <!-- Board + Inventory -->
@@ -72,15 +104,19 @@
           @drop.prevent="handleInventoryDrop"
         >
           <!-- Champions -->
-          <div class="border h-80 border-gray-200 rounded-xl bg-white p-3 flex-1 flex flex-col">
-            <h3 class="text-sm font-semibold text-gray-700 mb-2 text-center">Champions</h3>
+          <div
+            class="border h-82 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 p-3 flex-1 flex flex-col"
+          >
+            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2 text-center">
+              Champions
+            </h3>
 
             <!-- 🔍 Search Bar -->
             <input
               v-model="champSearch"
               type="text"
               placeholder="Search by name or trait..."
-              class="w-full mb-3 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-400"
+              class="w-full mb-3 px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-orange-400 dark:focus:ring-purple-400 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500"
             />
 
             <transition-group
@@ -101,18 +137,23 @@
           </div>
 
           <!-- Items -->
-          <div class="border h-80 border-gray-200 rounded-xl bg-white flex-1 flex flex-col p-3">
-            <h3 class="text-sm font-semibold text-gray-700 mb-2 text-center">Items</h3>
+          <div
+            class="border h-82 border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 flex-1 flex flex-col p-3"
+          >
+            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-2 text-center">
+              Items
+            </h3>
 
             <!-- 🔍 Search Bar -->
             <input
               v-model="itemSearch"
               type="text"
               placeholder="Search by name"
-              class="w-full mb-3 px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-orange-400"
+              class="w-full mb-3 px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-1 focus:ring-orange-400 dark:focus:ring-purple-400 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500"
             />
+
             <!-- Tabs -->
-            <div class="flex border-b border-gray-300 overflow-y-auto">
+            <div class="flex border-b border-gray-300 dark:border-gray-700 overflow-y-auto">
               <button
                 v-for="kind in itemKinds"
                 :key="kind"
@@ -120,8 +161,8 @@
                 class="flex-1 py-2 text-sm font-medium transition-colors cursor-pointer"
                 :class="[
                   activeItemKind === kind
-                    ? 'text-orange-600 border-b-2 border-orange-500 bg-orange-50'
-                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50',
+                    ? 'text-orange-600 dark:text-purple-400 border-b-2 border-orange-500 dark:border-purple-500 bg-orange-50 dark:bg-purple-950'
+                    : 'text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700',
                 ]"
               >
                 {{ kind }}
@@ -145,7 +186,7 @@
               />
               <p
                 v-if="!displayedItems.length"
-                class="text-xs text-gray-400 text-center w-full py-6"
+                class="text-xs text-gray-400 dark:text-gray-400 text-center w-full py-6"
               >
                 No {{ activeItemKind }} items
               </p>
@@ -153,24 +194,35 @@
           </div>
         </div>
       </div>
+
+      <!-- Bottom Panels (Mobile Traits + Equipped Items) -->
       <div class="flex flex-col md:flex-row gap-5">
         <!-- Traits Panel Mobile -->
         <div
-          class="flex xl:hidden max-h-[calc(100vh_-_160px)] w-full border border-gray-200 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white"
+          class="flex xl:hidden max-h-[calc(100vh_-_160px)] w-full border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white dark:bg-gray-800"
         >
-          <h2 class="text-lg font-semibold text-center text-gray-700">Traits</h2>
+          <h2 class="text-lg font-semibold text-center text-gray-700 dark:text-gray-200">Traits</h2>
           <div v-if="activeTraits.length" class="flex flex-col gap-3 overflow-y-auto">
             <div v-for="trait in activeTraits" :key="trait.id" class="flex items-center gap-2">
               <img
                 :src="`/img/tft-trait/${trait.url}`"
                 class="w-6 h-6 rounded-full"
-                :class="trait.currentThresholdIndex === -1 ? 'bg-gray-300' : 'bg-orange-400'"
+                :class="
+                  trait.currentThresholdIndex === -1
+                    ? 'bg-gray-300 dark:bg-gray-600'
+                    : 'bg-orange-400 dark:bg-purple-400'
+                "
                 alt=""
               />
               <div class="flex flex-col flex-1">
-                <span class="font-medium text-sm">{{ trait.name }}</span>
+                <span class="font-medium text-sm text-gray-700 dark:text-gray-200">{{
+                  trait.name
+                }}</span>
                 <div class="text-xs flex gap-1 flex-wrap">
-                  <span v-if="trait.currentThresholdIndex === -1" class="text-gray-400">
+                  <span
+                    v-if="trait.currentThresholdIndex === -1"
+                    class="text-gray-400 dark:text-gray-400"
+                  >
                     {{ trait.count }}/{{ trait.thresholds[0] }}
                   </span>
                   <template v-else>
@@ -179,7 +231,7 @@
                         :class="
                           index === trait.currentThresholdIndex
                             ? 'font-bold text-green-600'
-                            : 'text-gray-500'
+                            : 'text-gray-500 dark:text-gray-400'
                         "
                       >
                         {{ n }}
@@ -189,28 +241,35 @@
                   </template>
                 </div>
               </div>
-              <span class="font-semibold">{{ trait.count }}</span>
+              <span class="font-semibold text-gray-700 dark:text-gray-200">{{ trait.count }}</span>
             </div>
           </div>
-          <p v-else class="text-sm text-gray-400 text-center">No active traits</p>
+          <p v-else class="text-sm text-gray-400 text-center dark:text-gray-400">
+            No active traits
+          </p>
         </div>
+
         <!-- Equipped Items Panel -->
         <div
-          class="w-full max-h-[calc(100vh_-_160px)] 2xl:w-56 border border-gray-200 rounded-xl shadow-sm p-4 flex flex-col gap-4 bg-white overflow-y-auto"
+          class="w-full max-h-[calc(100vh_-_160px)] 2xl:w-56 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 flex flex-col gap-4 bg-white dark:bg-gray-800 overflow-y-auto"
         >
-          <h2 class="text-lg font-semibold text-center text-gray-700">Equipped Items</h2>
+          <h2 class="text-lg font-semibold text-center text-gray-700 dark:text-gray-200">
+            Equipped Items
+          </h2>
 
           <div v-if="equippedItemsList.length" class="flex flex-col gap-2">
             <div
               v-for="item in equippedItemsList"
               :key="item.id"
-              class="flex flex-col border border-gray-200 rounded-lg p-2 hover:bg-gray-50 transition"
+              class="flex flex-col border border-gray-200 dark:border-gray-700 rounded-lg p-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
             >
               <div class="flex items-center gap-2">
                 <img :src="`/img/tft-item/${item.id}.png`" class="w-6 h-6 rounded" />
                 <div class="flex flex-col">
-                  <span class="text-sm font-medium">{{ item.name }}</span>
-                  <div class="flex items-center gap-2 text-xs text-gray-500">
+                  <span class="text-sm font-medium text-gray-700 dark:text-gray-200">{{
+                    item.name
+                  }}</span>
+                  <div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                     <span>×{{ item.count }}</span>
                     <span v-if="item.unique" class="text-red-500 font-semibold">Unique</span>
                   </div>
@@ -219,34 +278,44 @@
               <div v-if="item.build?.length" class="flex items-center gap-1 mt-1 ml-8">
                 <template v-for="(comp, index) in item.build" :key="comp.id">
                   <img :src="`/img/tft-item/${comp.id}.png`" class="w-5 h-5 rounded" />
-                  <span v-if="index < item.build.length - 1" class="text-gray-400 text-xs">×</span>
+                  <span
+                    v-if="index < item.build.length - 1"
+                    class="text-gray-400 dark:text-gray-500 text-xs"
+                    >×</span
+                  >
                 </template>
               </div>
             </div>
           </div>
-          <p v-else class="text-sm text-gray-400 text-center">No items equipped</p>
+          <p v-else class="text-sm text-gray-400 text-center dark:text-gray-400">
+            No items equipped
+          </p>
 
-          <div class="border-t border-gray-200 my-2"></div>
+          <div class="border-t border-gray-200 dark:border-gray-700 my-2"></div>
 
           <!-- Total Basic Items -->
           <div>
-            <h3 class="text-base font-semibold text-center mb-2 text-gray-700">
+            <h3 class="text-base font-semibold text-center mb-2 text-gray-700 dark:text-gray-200">
               Basic Items Needed
             </h3>
             <div v-if="totalBasicItems.length" class="flex flex-col gap-2">
               <div
                 v-for="item in totalBasicItems"
                 :key="item.id"
-                class="flex items-center gap-2 border border-gray-200 rounded-lg p-2 hover:bg-gray-50 transition"
+                class="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-lg p-2 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
               >
                 <img :src="`/img/tft-item/${item.id}.png`" class="w-5 h-5 rounded" />
                 <div class="flex flex-col">
-                  <span class="text-sm font-medium">{{ item.name }}</span>
-                  <span class="text-xs text-gray-500">×{{ item.count }}</span>
+                  <span class="text-sm font-medium text-gray-700 dark:text-gray-200">{{
+                    item.name
+                  }}</span>
+                  <span class="text-xs text-gray-500 dark:text-gray-400">×{{ item.count }}</span>
                 </div>
               </div>
             </div>
-            <p v-else class="text-sm text-gray-400 text-center">No basic items required</p>
+            <p v-else class="text-sm text-gray-400 text-center dark:text-gray-400">
+              No basic items required
+            </p>
           </div>
         </div>
       </div>
@@ -255,7 +324,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { Sun, Moon } from 'lucide-vue-next'
+
 import HexTile from './HexTile.vue'
 import InventoryItem from './InventoryItem.vue'
 import { champions, items, mappingChampionsTraits, championTraits, itemKinds } from '@/assets/datas'
@@ -292,7 +363,16 @@ const activeItemKind = ref(itemKinds[0])
 const champSearch = ref<string>('')
 const itemSearch = ref<string>('')
 const dragSource = ref<{ r: number; c: number } | null>(null) // source tile if drag from a HexTile
+const isDark = ref(false)
 
+//LIFECYCLE
+onMounted(() => {
+  const stored = localStorage.getItem('darkMode')
+  if (stored === 'true') {
+    isDark.value = true
+    document.documentElement.classList.add('dark')
+  }
+})
 //COMPUTED
 const displayedChampions = computed<Inventory[]>(() => {
   const search = champSearch.value.trim().toLowerCase()
@@ -496,6 +576,16 @@ const totalBasicItems = computed(() => {
 })
 
 //METHODS
+function toggleDarkMode() {
+  isDark.value = !isDark.value
+  if (isDark.value) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+  localStorage.setItem('darkMode', isDark.value ? 'true' : 'false')
+}
+
 function onTileDragStart(item: DragItem, r?: number, c?: number) {
   currentInventoryDrag.value = item
   if (r !== undefined && c !== undefined) {

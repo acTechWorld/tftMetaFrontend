@@ -54,11 +54,13 @@
               :current-inventory-drag="currentInventoryDrag"
               :main="board[r][c].main"
               :subs="board[r][c].subs"
+              :star-level="board[r][c].starLevel"
               @drag-start="(item) => onTileDragStart(item, r, c)"
               @drop-main="(item) => handleMainDrop(r, c, item)"
               @drop-sub="(item) => handleSubDrop(r, c, item)"
               @remove-main="removeMain(r, c)"
               @remove-sub="(index) => (board[r][c].subs[index] = null)"
+              @set-stars="(starLevel) => (board[r][c].starLevel = starLevel)"
             />
           </div>
         </div>
@@ -206,6 +208,7 @@ const cols = 7
 type BoardTile = {
   main: DragItem | null
   subs: (DragItem | null)[]
+  starLevel: number | null
 }
 
 // 2D board state (rows × cols)
@@ -214,6 +217,7 @@ const board = ref<BoardTile[][]>(
     Array.from({ length: cols }, () => ({
       main: null,
       subs: [null, null, null],
+      starLevel: null
     })),
   ),
 )
@@ -417,6 +421,7 @@ function handleMainDrop(r: number, c: number, champion: DragItem) {
     // Coming from inventory → just place champ and clear subs
     board.value[r][c].main = champion
     board.value[r][c].subs = [null, null, null]
+    board.value[r][c].starLevel = 1
   } else {
     const { r: sr, c: sc } = dragSource.value
 
@@ -427,19 +432,24 @@ function handleMainDrop(r: number, c: number, champion: DragItem) {
       // ✅ Swap champions & subs
       const tempMain = targetTile.main
       const tempSubs = [...targetTile.subs]
+      const tempStarLevel = targetTile.starLevel
 
       targetTile.main = sourceTile.main
       targetTile.subs = [...sourceTile.subs]
+      targetTile.starLevel = sourceTile.starLevel
 
       sourceTile.main = tempMain
       sourceTile.subs = [...tempSubs]
+      sourceTile.starLevel = tempStarLevel
     } else {
       // ✅ Just move champ + subs to empty spot
       targetTile.main = sourceTile.main
       targetTile.subs = [...sourceTile.subs]
+      targetTile.starLevel = sourceTile.starLevel
 
       sourceTile.main = null
       sourceTile.subs = [null, null, null]
+      sourceTile.starLevel = null
     }
   }
 

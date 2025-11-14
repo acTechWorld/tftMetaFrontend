@@ -82,11 +82,12 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import type { DragItem } from './BoardComponent.vue';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   currentInventoryDrag: DragItem | null
   main: DragItem | null
   subs: (DragItem | null)[]
-}>();
+  starLevel: number | null
+}>(), {starLevel: 1});
 
 const emits = defineEmits<{
   (e: 'drag-start', item: DragItem): void
@@ -98,7 +99,6 @@ const emits = defineEmits<{
 }>();
 
 const isHovering = ref(false);
-const starLevel = ref(1);
 const ctrlPressed = ref(false);
 
 //LIFECYCLE
@@ -130,7 +130,6 @@ function onClick(e: MouseEvent) {
 }
 
 function setStars(level: number) {
-  starLevel.value = level;
   emits('set-stars', level);
 }
 

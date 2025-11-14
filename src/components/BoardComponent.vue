@@ -1,6 +1,6 @@
 <template>
   <!-- Top toggle button -->
-  <div class="bg-gray-50 dark:bg-gray-900 min-h-screen py-20 px-5">
+  <div class="bg-gray-50 dark:bg-gray-900 min-h-screen pt-30 pb-20 px-5">
     <nav
       class="flex items-center justify-between px-5 py-4 absolute top-0 w-full max-w-[1800px] justify-self-center"
     >
@@ -20,9 +20,7 @@
     </nav>
     <div class="max-w-[1800px] mx-auto flex flex-col xl:flex-row gap-6">
       <!-- Traits Panel -->
-      <div
-        class="xl:flex hidden max-h-[calc(100vh_-_160px)] w-56 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white dark:bg-gray-800"
-      >
+      <div class="xl:flex hidden h-fit max-h-[calc(100vh_-_200px)] w-56 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white dark:bg-gray-800">
         <h2 class="text-lg font-semibold text-center text-gray-700 dark:text-gray-200">Traits</h2>
         <div v-if="activeTraits.length" class="flex flex-col gap-3 overflow-y-auto">
           <div v-for="trait in activeTraits" :key="trait.id" class="flex items-center gap-2">
@@ -75,9 +73,9 @@
       </div>
 
       <!-- Board + Inventory -->
-      <div class="flex-1 flex flex-col gap-6">
+      <div class="flex-1 flex flex-col gap-6 h-full">
         <!-- Hex Board -->
-        <div class="self-center -translate-x-6 xl:-translate-x-6.5 2xl:-translate-x-8">
+        <div class="self-center -translate-x-2 @media(min-width:500px)]:-translate-x-2.5 sm:!-translate-x-4 md:!-translate-x-5 lg:!-translate-x-6 xl:!-translate-x-6.5 2xl:!-translate-x-8">
           <div v-for="(row, r) in rows" :key="r" class="flex gap-2 justify-center">
             <HexTile
               v-for="(col, c) in cols"
@@ -196,10 +194,10 @@
       </div>
 
       <!-- Bottom Panels (Mobile Traits + Equipped Items) -->
-      <div class="flex flex-col md:flex-row gap-5">
+      <div class="flex flex-col md:flex-row gap-4">
         <!-- Traits Panel Mobile -->
         <div
-          class="flex xl:hidden max-h-[calc(100vh_-_160px)] w-full border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white dark:bg-gray-800"
+          class="flex xl:hidden h-82 w-full border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 flex-col gap-4 bg-white dark:bg-gray-800"
         >
           <h2 class="text-lg font-semibold text-center text-gray-700 dark:text-gray-200">Traits</h2>
           <div v-if="activeTraits.length" class="flex flex-col gap-3 overflow-y-auto">
@@ -251,7 +249,7 @@
 
         <!-- Equipped Items Panel -->
         <div
-          class="w-full max-h-[calc(100vh_-_160px)] 2xl:w-56 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 flex flex-col gap-4 bg-white dark:bg-gray-800 overflow-y-auto"
+          class="w-full h-82 xl:h-fit xl:max-h-[calc(100vh_-_200px)] 2xl:w-56 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm p-4 flex flex-col gap-4 bg-white dark:bg-gray-800 overflow-y-auto"
         >
           <h2 class="text-lg font-semibold text-center text-gray-700 dark:text-gray-200">
             Equipped Items

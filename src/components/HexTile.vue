@@ -7,10 +7,10 @@
   >
     <!-- Main hexagon -->
     <div
-      class="w-30 xl:w-36 2xl:w-40 aspect-square cursor-pointer group relative"
-      :class="isHovering && (currentInventoryDrag?.type === 'champion' || isHoveringItemValid)
+      class="w-30 xl:w-36 2xl:w-40 aspect-square group relative"
+      :class="[isHovering && (currentInventoryDrag?.type === 'champion' || isHoveringItemValid)
         ? 'bg-orange-400/60 shadow-[0_0_25px_rgba(249,115,22,0.9)]'
-        : 'bg-orange-400'"
+        : 'bg-orange-400', ctrlPressed && main ? 'cursor-not-allowed': 'cursor-pointer']"
       style="clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);"
       @click="onClick"
     >
@@ -19,7 +19,7 @@
         v-if="main"
         :src="main.src"
         class="absolute inset-0 w-full h-full object-cover"
-        draggable="true"
+        :draggable="!ctrlPressed"
         @dragstart="e => onDragStart(e, main)"
       />
 
@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import type { DragItem } from './BoardComponent.vue';
 
 const props = defineProps<{
@@ -98,9 +98,28 @@ const emits = defineEmits<{
 }>();
 
 const isHovering = ref(false);
-const starLevel = ref(1); // default 1 star
+const starLevel = ref(1);
+const ctrlPressed = ref(false);
 
-// COMPTUED
+//LIFECYCLE
+// Detect ctrl/command key globally
+const onKeyDown = (e: KeyboardEvent) => {
+  if (e.ctrlKey || e.metaKey) ctrlPressed.value = true;
+};
+const onKeyUp = (e: KeyboardEvent) => {
+  if (!e.ctrlKey && !e.metaKey) ctrlPressed.value = false;
+};
+
+onMounted(() => {
+  window.addEventListener('keydown', onKeyDown);
+  window.addEventListener('keyup', onKeyUp);
+});
+onUnmounted(() => {
+  window.removeEventListener('keydown', onKeyDown);
+  window.removeEventListener('keyup', onKeyUp);
+});
+
+// COMPUTED
 const isHoveringItemValid = computed(() => isHovering.value && props.currentInventoryDrag?.type === 'item' && props.main)
 
 // METHODS

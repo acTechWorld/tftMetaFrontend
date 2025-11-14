@@ -291,6 +291,7 @@ const equippedItemsList = computed(() => {
         count,
         unique: fullItem?.unique || false,
         build, // 🧩 list of basic items
+        kind: fullItem?.kind
       }
     })
     .sort((a, b) => b.count - a.count)
@@ -375,11 +376,12 @@ const totalBasicItems = computed(() => {
 
   // Loop through equipped full items
   for (const item of equippedItemsList.value) {
-    // Skip if no build (i.e., basic items themselves)
-    if (!item.build?.length) continue
-
-    for (const comp of item.build) {
-      basicCountMap[comp.id] = (basicCountMap[comp.id] || 0) + item.count
+    if(item.kind === 'basic'){
+        basicCountMap[item.id] = (basicCountMap[item.id] || 0) + item.count
+    } else {
+       for (const comp of item.build) {
+        basicCountMap[comp.id] = (basicCountMap[comp.id] || 0) + item.count
+      }
     }
   }
 
@@ -461,27 +463,33 @@ function handleSubDrop(r: number, c: number, item: DragItem) {
   // --- Check uniqueness ---
   if (fullItem.unique) {
     const alreadyEquipped = board.value.some((row) =>
-      row.some((tile) => tile.main?.id === championId && tile.subs.some((s) => s?.id === item.id)),
+      row.some((tile) =>
+        tile.main?.id === championId && tile.subs.some((s) => s?.id === item.id),
+      ),
     )
     if (alreadyEquipped) {
-      // Cannot equip this unique item again on the same champion
-      return
+      return // Cannot equip this unique item again on the same champion
     }
   }
 
   // --- Check incompatible traits ---
   if (fullItem.incompatibleTraits && fullItem.incompatibleTraits.length) {
-    // Get champion's traits
     const championTraitsIds: string[] =
       mappingChampionsTraits[championId as keyof typeof mappingChampionsTraits] || []
 
-    // If champion has any incompatible trait, cancel
     const hasIncompatible = fullItem.incompatibleTraits.some((traitId: string) =>
       championTraitsIds.includes(traitId),
     )
+    if (hasIncompatible) return
+  }
 
-    if (hasIncompatible) {
-      return // Cannot equip item on this champion
+  // --- Check for basic items limit ---
+  if (fullItem.kind === 'basic') {
+    const alreadyBasicEquipped = targetTile.subs.some(
+      (s) => s && items.find(i => i.id === s.id)?.kind === 'basic'
+    )
+    if (alreadyBasicEquipped) {
+      return // Cannot equip more than one basic item
     }
   }
 
@@ -499,6 +507,7 @@ function handleSubDrop(r: number, c: number, item: DragItem) {
 
   resetDrag()
 }
+
 
 function handleInventoryDrop(e: DragEvent) {
   e.preventDefault()

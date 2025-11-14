@@ -2263,4 +2263,4 @@ export const items = [
 ]
 
 
-export const itemKinds = ['advanced', 'emblem', 'artifact', 'basic', 'support', 'misc', 'spatula', 'consumable' ]
+export const itemKinds = ['advanced', 'emblem', 'artifact', 'basic', 'support']

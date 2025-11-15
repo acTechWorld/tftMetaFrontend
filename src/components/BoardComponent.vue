@@ -85,7 +85,7 @@
               Save
             </button>
             <button class="text-lg font-semibold bg-white border-gray-200 cursor-pointer px-4 rounded-lg border hover:bg-orange-400/5 transition-all" @click="handleClickClear">
-              Clear
+              Clear2
             </button>
           </div>
           <div v-for="(row, r) in rows" :key="r" class="flex md:gap-2 justify-center">

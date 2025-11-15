@@ -1,16 +1,60 @@
 <template>
   <transition name="fade">
-  <div
-    v-if="showToast"
-    class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-1000"
-  >
-    {{ toastMessage }}
-  </div>
-</transition>
+    <div
+      v-if="showLoadModal"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 m-2"
+    >
+      <div
+        class="bg-gray-50 dark:bg-gray-800 rounded-xl w-96 max-h-[80vh] overflow-auto p-6 relative"
+      >
+        <button
+          class="absolute cursor-pointer top-3 right-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+          @click="showLoadModal = false"
+        >
+          ✕
+        </button>
+        <h2 class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">
+          Load Composition
+        </h2>
+
+        <div class="flex flex-col gap-3">
+          <div
+            v-for="(comp, index) in savedCompositions"
+            :key="index"
+            class="flex items-center gap-2 cursor-pointer p-2 rounded bg-white hover:bg-orange-400/5 dark:bg-gray-700 dark:hover:bg-purple-400/5 border"
+            @click="loadComposition(comp)"
+          >
+            <div class="flex gap-1 overflow-auto flex-1">
+              <template v-for="tile in comp.champions">
+                <img
+                  :key="tile.main?.id"
+                  v-if="tile.main"
+                  :src="tile.main.src"
+                  class="w-6 h-6 rounded"
+                />
+              </template>
+            </div>
+            <span class="ml-2 text-gray-700 dark:text-gray-200 font-medium">
+              {{ comp.name }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+
+  <transition name="fade">
+    <div
+      v-if="showToast"
+      class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-1000"
+    >
+      {{ toastMessage }}
+    </div>
+  </transition>
   <transition name="fade">
     <div
       v-if="showSaveModal"
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 m-2"
     >
       <div
         class="bg-white dark:bg-gray-800 rounded-xl w-96 max-h-[80vh] overflow-auto p-6 relative min-h-70 flex flex-col"
@@ -35,7 +79,7 @@
             ]"
           />
 
-          <div class="w-full h-full grid grid-cols-2 gap-2">
+          <div class="w-full h-full grid grid-cols-2 gap-2 max-h-70 overflow-scroll">
             <div v-for="(tile, index) in onBoardChampions" :key="index">
               <div v-if="tile.main" class="flex items-center gap-1">
                 <img :src="tile.main.src" class="w-8 h-8 rounded" />
@@ -147,10 +191,18 @@
         >
           <div class="flex ml-auto gap-4 text-gray-700 dark:text-gray-200">
             <button
+              class="cursor-pointer hover:bg-orange-400/5 dark:hover:bg-purple-600/5 text-lg font-semibold bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 px-4 rounded-lg border transition-all"
+              @click="handleClickLoad"
+            >
+              Load
+            </button>
+            <button
               :disabled="onBoardChampions?.length === 0"
               class="text-lg font-semibold bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 px-4 rounded-lg border transition-all"
               :class="
-                onBoardChampions?.length > 0 ? 'cursor-pointer hover:bg-orange-400/5 dark:hover:bg-purple-600/5' : 'opacity-50'
+                onBoardChampions?.length > 0
+                  ? 'cursor-pointer hover:bg-orange-400/5 dark:hover:bg-purple-600/5'
+                  : 'opacity-50'
               "
               @click="handleClickSave"
             >
@@ -163,22 +215,24 @@
               Clear
             </button>
           </div>
-          <div v-for="(row, r) in rows" :key="r" class="flex md:gap-2 justify-center">
-            <HexTile
-              v-for="(col, c) in cols"
-              :key="`${r}-${c}`"
-              :class="r % 2 === 0 ? '' : 'translate-x-1/2'"
-              :current-inventory-drag="currentInventoryDrag"
-              :main="board[r][c].main"
-              :subs="board[r][c].subs"
-              :star-level="board[r][c].starLevel"
-              @drag-start="(item) => onTileDragStart(item, r, c)"
-              @drop-main="(item) => handleMainDrop(r, c, item)"
-              @drop-sub="(item) => handleSubDrop(r, c, item)"
-              @remove-main="removeMain(r, c)"
-              @remove-sub="(index) => (board[r][c].subs[index] = null)"
-              @set-stars="(starLevel) => (board[r][c].starLevel = starLevel)"
-            />
+          <div>
+            <div v-for="(row, r) in rows" :key="r" class="flex md:gap-2 justify-center">
+              <HexTile
+                v-for="(col, c) in cols"
+                :key="`${r}-${c}`"
+                :class="r % 2 === 0 ? '' : 'translate-x-1/2'"
+                :current-inventory-drag="currentInventoryDrag"
+                :main="board[r][c].main"
+                :subs="board[r][c].subs"
+                :star-level="board[r][c].starLevel"
+                @drag-start="(item) => onTileDragStart(item, r, c)"
+                @drop-main="(item) => handleMainDrop(r, c, item)"
+                @drop-sub="(item) => handleSubDrop(r, c, item)"
+                @remove-main="removeMain(r, c)"
+                @remove-sub="(index) => (board[r][c].subs[index] = null)"
+                @set-stars="(starLevel) => (board[r][c].starLevel = starLevel)"
+              />
+            </div>
           </div>
         </div>
 
@@ -736,6 +790,8 @@ const showSaveModal = ref(false)
 const compName = ref('')
 const showToast = ref(false)
 const toastMessage = ref('')
+const showLoadModal = ref(false)
+const savedCompositions = ref<any[]>([])
 
 //LIFECYCLE
 onMounted(() => {
@@ -775,12 +831,11 @@ const displayedChampions = computed<Inventory[]>(() => {
 
 const onBoardChampions = computed(() => {
   const res = []
-  for (const row of board.value) {
-    for (const tile of row) {
-      if (!tile.main) continue
-
-      res.push(tile)
-    }
+  for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+         if (!board.value[r][c].main) continue
+          res.push({...board.value[r][c], r, c })
+      }
   }
   return res
 })
@@ -974,6 +1029,45 @@ function handleClickSave() {
   if (onBoardChampions.value?.length > 0) showSaveModal.value = true
 }
 
+function handleClickLoad() {
+  const stored = localStorage.getItem('savedCompositions')
+  savedCompositions.value = stored ? JSON.parse(stored) : []
+  if (!savedCompositions.value.length) {
+    toastMessage.value = 'No compositions saved'
+    showToast.value = true
+    setTimeout(() => (showToast.value = false), 3000)
+    return
+  }
+  showLoadModal.value = true
+}
+
+function loadComposition(comp: any) {
+  // Reset board first
+  board.value = Array.from({ length: rows }, () =>
+    Array.from({ length: cols }, () => ({
+      main: null,
+      subs: [null, null, null],
+      starLevel: null,
+    })),
+  )
+
+  // Populate board from saved comp
+  comp.champions.forEach((tile: any) => {
+    console.log(board.value[tile.r][tile.c])
+    board.value[tile.r][tile.c] = {
+      main: tile.main,
+      subs: tile.subs,
+      starLevel: tile.starLevel,
+    }
+  })
+
+
+  showLoadModal.value = false
+  toastMessage.value = `Composition "${comp.name}" loaded!`
+  showToast.value = true
+  setTimeout(() => (showToast.value = false), 3000)
+}
+
 function saveComposition() {
   if (!compName.value.trim()) {
     return
@@ -984,17 +1078,13 @@ function saveComposition() {
   const newComp = {
     name: compName.value.trim(),
     date: new Date().toISOString(),
-    champions: onBoardChampions.value.map((tile) => ({
-      main: tile.main,
-      subs: tile.subs,
-      starLevel: tile.starLevel,
-    })),
+    champions: onBoardChampions.value,
   }
 
   compositions.push(newComp)
   localStorage.setItem('savedCompositions', JSON.stringify(compositions))
 
-   // Show toast
+  // Show toast
   toastMessage.value = `Composition "${compName.value}" saved!`
   showToast.value = true
   setTimeout(() => {
@@ -1192,11 +1282,12 @@ function handleClickChampItem(champion: Inventory) {
   transition: none !important;
 }
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.3s ease;
 }
-.fade-enter-from, .fade-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
 }
-
 </style>

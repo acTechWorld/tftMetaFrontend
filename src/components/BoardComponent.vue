@@ -80,9 +80,14 @@
         <div
           class="self-center flex flex-col gap-4 lg:gap-6 -translate-x-2 @media(min-width:500px)]:-translate-x-2.5 sm:!-translate-x-4 md:!-translate-x-5 lg:!-translate-x-6 xl:!-translate-x-6.5 2xl:!-translate-x-8"
         >
-          <button class="text-lg ml-auto font-semibold bg-white border-gray-200 cursor-pointer px-4 rounded-lg border hover:bg-gray-50" @click="handleClickClear">
-            Clear
-          </button>
+          <div class="flex ml-auto gap-4">
+            <button class="text-lg font-semibold bg-white border-gray-200 cursor-pointer px-4 rounded-lg border hover:bg-orange-400/5 transition-all" @click="handleClickClear">
+              Save
+            </button>
+            <button class="text-lg font-semibold bg-white border-gray-200 cursor-pointer px-4 rounded-lg border hover:bg-orange-400/5 transition-all" @click="handleClickClear">
+              Clear
+            </button>
+          </div>
           <div v-for="(row, r) in rows" :key="r" class="flex md:gap-2 justify-center">
             <HexTile
               v-for="(col, c) in cols"

@@ -1,4 +1,69 @@
 <template>
+  <transition name="fade">
+  <div
+    v-if="showToast"
+    class="fixed top-5 right-5 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-1000"
+  >
+    {{ toastMessage }}
+  </div>
+</transition>
+  <transition name="fade">
+    <div
+      v-if="showSaveModal"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+    >
+      <div
+        class="bg-white dark:bg-gray-800 rounded-xl w-96 max-h-[80vh] overflow-auto p-6 relative min-h-70 flex flex-col"
+      >
+        <button
+          class="absolute cursor-pointer top-3 right-3 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+          @click="showSaveModal = false"
+        >
+          ✕
+        </button>
+        <h2 class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">
+          Save Composition
+        </h2>
+
+        <form @submit.prevent="saveComposition" class="h-full flex flex-col flex-1 gap-4">
+          <input
+            v-model="compName"
+            type="text"
+            placeholder="Composition Name"
+            :class="[
+              'w-full px-3 py-2 border rounded border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-1 focus:ring-orange-400 dark:focus:ring-purple-400 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200',
+            ]"
+          />
+
+          <div class="w-full h-full grid grid-cols-2 gap-2">
+            <div v-for="(tile, index) in onBoardChampions" :key="index">
+              <div v-if="tile.main" class="flex items-center gap-1">
+                <img :src="tile.main.src" class="w-8 h-8 rounded" />
+                <div class="flex gap-1" v-if="tile.subs">
+                  <template v-for="sub in tile.subs">
+                    <img v-if="sub" :key="sub.id" :src="sub.src" class="w-5 h-5 rounded" />
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            :disabled="!compName.trim()"
+            class="w-full mt-auto bg-orange-500 dark:bg-purple-500 text-white font-semibold py-2 rounded"
+            :class="
+              !compName.trim()
+                ? 'opacity-50 cursor-not-allowed'
+                : 'cursor-pointer hover:bg-orange-600 dark:hover:bg-purple-600'
+            "
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+  </transition>
   <!-- Top toggle button -->
   <div class="bg-gray-50 dark:bg-gray-900 min-h-screen pt-30 pb-20 px-5">
     <nav
@@ -80,12 +145,22 @@
         <div
           class="self-center flex flex-col gap-4 lg:gap-6 -translate-x-2 @media(min-width:500px)]:-translate-x-2.5 sm:!-translate-x-4 md:!-translate-x-5 lg:!-translate-x-6 xl:!-translate-x-6.5 2xl:!-translate-x-8"
         >
-          <div class="flex ml-auto gap-4">
-            <button class="text-lg font-semibold bg-white border-gray-200 cursor-pointer px-4 rounded-lg border hover:bg-orange-400/5 transition-all" @click="handleClickClear">
+          <div class="flex ml-auto gap-4 text-gray-700 dark:text-gray-200">
+            <button
+              :disabled="onBoardChampions?.length === 0"
+              class="text-lg font-semibold bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 px-4 rounded-lg border transition-all"
+              :class="
+                onBoardChampions?.length > 0 ? 'cursor-pointer hover:bg-orange-400/5 dark:hover:bg-purple-600/5' : 'opacity-50'
+              "
+              @click="handleClickSave"
+            >
               Save
             </button>
-            <button class="text-lg font-semibold bg-white border-gray-200 cursor-pointer px-4 rounded-lg border hover:bg-orange-400/5 transition-all" @click="handleClickClear">
-              Clear2
+            <button
+              class="text-lg font-semibold bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 cursor-pointer px-4 rounded-lg border hover:bg-orange-400/5 dark:hover:bg-purple-600/5 transition-all"
+              @click="handleClickClear"
+            >
+              Clear
             </button>
           </div>
           <div v-for="(row, r) in rows" :key="r" class="flex md:gap-2 justify-center">
@@ -144,14 +219,13 @@
                 @drag-start="(el) => (currentInventoryDrag = el)"
                 @click="handleClickChampItem(champion)"
               />
-               <p
+              <p
                 v-if="!displayedChampions.length"
                 class="text-xs absolute text-gray-400 dark:text-gray-400 text-center w-full py-6"
               >
                 No champions found
               </p>
             </transition-group>
-           
           </div>
 
           <!-- Items -->
@@ -275,7 +349,6 @@
                 No champions found
               </p>
             </transition-group>
-            
           </div>
 
           <!-- Items panel -->
@@ -659,6 +732,10 @@ const dragSource = ref<{ r: number; c: number } | null>(null) // source tile if 
 const isDark = ref(false)
 const mobileInventoryTab = ref<'champions' | 'items'>('champions')
 const mobileBottomTab = ref<'traits' | 'equipped'>('traits')
+const showSaveModal = ref(false)
+const compName = ref('')
+const showToast = ref(false)
+const toastMessage = ref('')
 
 //LIFECYCLE
 onMounted(() => {
@@ -694,6 +771,18 @@ const displayedChampions = computed<Inventory[]>(() => {
       name: c.name,
       url: c.url,
     }))
+})
+
+const onBoardChampions = computed(() => {
+  const res = []
+  for (const row of board.value) {
+    for (const tile of row) {
+      if (!tile.main) continue
+
+      res.push(tile)
+    }
+  }
+  return res
 })
 
 const displayedItems = computed(() => {
@@ -880,6 +969,42 @@ function handleClickClear() {
     })),
   )
 }
+
+function handleClickSave() {
+  if (onBoardChampions.value?.length > 0) showSaveModal.value = true
+}
+
+function saveComposition() {
+  if (!compName.value.trim()) {
+    return
+  }
+
+  const compositions = JSON.parse(localStorage.getItem('savedCompositions') || '[]')
+
+  const newComp = {
+    name: compName.value.trim(),
+    date: new Date().toISOString(),
+    champions: onBoardChampions.value.map((tile) => ({
+      main: tile.main,
+      subs: tile.subs,
+      starLevel: tile.starLevel,
+    })),
+  }
+
+  compositions.push(newComp)
+  localStorage.setItem('savedCompositions', JSON.stringify(compositions))
+
+   // Show toast
+  toastMessage.value = `Composition "${compName.value}" saved!`
+  showToast.value = true
+  setTimeout(() => {
+    showToast.value = false
+  }, 3000)
+
+  showSaveModal.value = false
+  compName.value = ''
+}
+
 function toggleDarkMode() {
   isDark.value = !isDark.value
   if (isDark.value) {
@@ -1038,14 +1163,13 @@ function handleClickChampItem(champion: Inventory) {
           type: 'champion',
           src: champion.url,
         }
-        tile.subs = [null, null, null]  // reset subs
-        tile.starLevel = 1              // optional: set default star level
-        return  // exit immediately after placing
+        tile.subs = [null, null, null] // reset subs
+        tile.starLevel = 1 // optional: set default star level
+        return // exit immediately after placing
       }
     }
   }
 }
-
 </script>
 <style lang="css" scoped>
 /* When elements are removed */
@@ -1067,4 +1191,12 @@ function handleClickChampItem(champion: Inventory) {
 .inv-enter-active {
   transition: none !important;
 }
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
 </style>

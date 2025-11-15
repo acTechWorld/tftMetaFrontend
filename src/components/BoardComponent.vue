@@ -78,8 +78,11 @@
       <div class="flex-1 flex flex-col gap-6 h-full">
         <!-- Hex Board -->
         <div
-          class="self-center -translate-x-2 @media(min-width:500px)]:-translate-x-2.5 sm:!-translate-x-4 md:!-translate-x-5 lg:!-translate-x-6 xl:!-translate-x-6.5 2xl:!-translate-x-8"
+          class="self-center flex flex-col gap-4 lg:gap-6 -translate-x-2 @media(min-width:500px)]:-translate-x-2.5 sm:!-translate-x-4 md:!-translate-x-5 lg:!-translate-x-6 xl:!-translate-x-6.5 2xl:!-translate-x-8"
         >
+          <button class="text-lg ml-auto font-semibold bg-white border-gray-200 cursor-pointer px-4 rounded-lg border hover:bg-gray-50" @click="handleClickClear">
+            Clear
+          </button>
           <div v-for="(row, r) in rows" :key="r" class="flex md:gap-2 justify-center">
             <HexTile
               v-for="(col, c) in cols"
@@ -863,6 +866,15 @@ const totalBasicItems = computed(() => {
 })
 
 //METHODS
+function handleClickClear() {
+  board.value = Array.from({ length: rows }, () =>
+    Array.from({ length: cols }, () => ({
+      main: null,
+      subs: [null, null, null],
+      starLevel: null,
+    })),
+  )
+}
 function toggleDarkMode() {
   isDark.value = !isDark.value
   if (isDark.value) {

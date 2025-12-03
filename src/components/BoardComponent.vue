@@ -16,7 +16,6 @@
         <h2 class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-200">
           Load Composition
         </h2>
-
         <div class="flex flex-col gap-3">
           <div
             v-for="(comp, index) in savedCompositions"

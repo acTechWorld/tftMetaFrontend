@@ -37,6 +37,7 @@
               {{ comp.name }}
             </span>
           </div>
+          
         </div>
       </div>
     </div>
